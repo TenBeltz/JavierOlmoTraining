@@ -1,5 +1,32 @@
-<div class="h-88 bg-white">
-  <div class="h-full bg-gray-200 w-84">
-    
-  </div>
+---
+import { Image } from 'astro:assets';
+const { title, description, image } = Astro.props;
+---
+
+<div class="situation-card relative h-64 sm:h-88 w-full sm:w-88 [&>div]:[backface-visibility:hidden]">
+	<div class="card-side card-front">
+		<Image src={image} alt={title} class="absolute object-cover w-full h-full"/>
+		<h3 class="absolute w-full text-xl font-bold text-center text-white bottom-10">{title}</h3>
+	</div>
+	<div class="flex flex-col items-center justify-between p-10 bg-white card-side card-back gap-y-2">
+    <div>
+      <h4 class="w-full text-xl font-bold text-straw">{title}</h4>
+      <p class="text-lg">{description}</p>
+    </div>
+	</div>
 </div>
+
+<style>
+	.card-front {
+		transform: perspective(600px) rotateY(0deg);
+	}
+	.card-back {
+		transform: perspective(600px) rotateY(180deg);
+	}
+	.situation-card:hover .card-front {
+		transform: perspective(600px) rotateY(180deg);
+	}
+	.situation-card:hover .card-back {
+		transform: perspective(600px) rotateY(360deg);
+	}
+</style>

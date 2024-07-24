@@ -8,18 +8,33 @@ export default {
         'lime-zest': '#d9ff00',
         'vegan-mastermind': '#20cf46',
         'acid-pops': '#41ea67',
-        'gray-fog': '#F1F5F9',
+        'gray-fog': '#f1f5f9',
+        'straw': '#d4be90',
       },
       boxShadow: {
         'header-element': 'inset 0 0 10px 2px #c7c7c779'
       },
       height: {
+        '84': '21rem',
         '88': '22rem'
       },
       width: {
-        '84': '21rem'
+        '84': '21rem',
+        '88': '22rem'
       }
 		},
 	},
-	plugins: [],
+	plugins: [
+    function ({ addComponents }) {
+      addComponents({
+        '.card-side': {
+          position: 'absolute',
+          width: '100%',
+          height: '100%',
+          overflow: 'hidden',
+          transitionDuration: '700ms'
+        },
+      });
+    },
+  ],
 }
