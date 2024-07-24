@@ -12,6 +12,12 @@ export default {
       },
       boxShadow: {
         'header-element': 'inset 0 0 10px 2px #c7c7c779'
+      },
+      height: {
+        '88': '22rem'
+      },
+      width: {
+        '84': '21rem'
       }
 		},
 	},

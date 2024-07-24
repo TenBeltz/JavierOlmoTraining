@@ -1,0 +1,22 @@
+---
+import SituationCard from "./SituationCard.astro";
+
+const situations = [
+  {},
+  {},
+  {},
+  {},
+  {},
+  {}
+]
+---
+
+<section class="flex flex-col gap-y-16 mt-10 p-6">
+  <h2 class="text-4xl text-white">
+    <strong class="text-electric-lime">¿Has vivido</strong>
+    alguna de estas situaciones?
+  </h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mx-auto w-fit">
+    {situations.map(situation => <SituationCard {...situation}/>)}
+  </div>
+</section>
