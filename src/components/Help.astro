@@ -2,22 +2,37 @@
 import { Image } from 'astro:assets';
 import bannerLeftImage from '../../public/images/how-we-help-banner-left-tmp.webp';
 import bannerRightImage from '../../public/images/how-we-help-banner-right-tmp.webp';
+import Step from '../components/HelpStep.astro';
+
+const steps = [
+  {},
+  {},
+  {},
+  {},
+  {}
+];
 ---
 
-<section class="bg-white py-4">
-  <h2 class="text-4xl px-24 py-8">
+<section class="py-4 bg-white">
+  <h2 class="px-24 py-8 text-4xl">
     <span class="font-bold text-electric-lime">¿Cómo</span>
     <span>te ayudamos?</span>
   </h2>
   <div class="flex gap-x-2 h-100">
     <div class="w-11/12">
-      <Image src={bannerLeftImage} alt="Banner" class="object-cover h-full w-full"/>
+      <Image src={bannerLeftImage} alt="Banner" class="object-cover w-full h-full"/>
     </div>
     <div>
-      <Image src={bannerRightImage} alt="Banner" class="object-cover h-full w-full"/>
+      <Image src={bannerRightImage} alt="Banner" class="object-cover w-full h-full"/>
     </div>
   </div>
-  <div>
-    <!-- TODO: help steps -->
+  <div class="relative flex justify-around bottom-6">
+    {steps.map((_, index) => (
+      <Step
+        number={index + 1}
+        isLastStep={index === steps.length - 1}
+        key={index}
+      />
+    ))}
   </div>
 </section>
