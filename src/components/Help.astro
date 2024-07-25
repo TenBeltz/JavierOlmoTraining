@@ -19,14 +19,14 @@ const steps = [
     <span>te ayudamos?</span>
   </h2>
   <div class="flex gap-x-2 h-100">
-    <div class="w-11/12">
+    <div class="w-full md:w-11/12">
       <Image src={bannerLeftImage} alt="Banner" class="object-cover w-full h-full"/>
     </div>
-    <div>
+    <div class="hidden md:block">
       <Image src={bannerRightImage} alt="Banner" class="object-cover w-full h-full"/>
     </div>
   </div>
-  <div class="relative flex justify-around bottom-6">
+  <div class="relative flex flex-col justify-around px-4 gap-y-4 md:flex-row bottom-6">
     {steps.map((step, index) => (
       <Step
         number={index + 1}
