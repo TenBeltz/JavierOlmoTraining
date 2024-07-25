@@ -1,15 +1,15 @@
 ---
 import { Image } from 'astro:assets';
-import bannerLeftImage from '../../public/images/how-we-help-banner-left-tmp.webp';
-import bannerRightImage from '../../public/images/how-we-help-banner-right-tmp.webp';
+import bannerLeftImage from '../../public/images/help/how-we-help-banner-left-tmp.webp';
+import bannerRightImage from '../../public/images/help/how-we-help-banner-right-tmp.webp';
 import Step from '../components/HelpStep.astro';
 
 const steps = [
-  {},
-  {},
-  {},
-  {},
-  {}
+  { text: 'Texto de ejemplo.'},
+  { text: 'Texto de ejemplo.'},
+  { text: 'Texto de ejemplo.'},
+  { text: 'Texto de ejemplo.'},
+  { text: 'Texto de ejemplo.'}
 ];
 ---
 
@@ -27,11 +27,12 @@ const steps = [
     </div>
   </div>
   <div class="relative flex justify-around bottom-6">
-    {steps.map((_, index) => (
+    {steps.map((step, index) => (
       <Step
         number={index + 1}
-        isLastStep={index === steps.length - 1}
+        text={step.text}
         key={index}
+        isLastStep={index === steps.length - 1}
       />
     ))}
   </div>
