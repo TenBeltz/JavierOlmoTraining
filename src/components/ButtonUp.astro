@@ -1,0 +1,40 @@
+---
+import ArrowUpCircle from "../assets/arrow-up-circle.svg?raw";
+---
+
+<div id="button-up" class="fixed z-10 transition-opacity opacity-0 cursor-pointer text-electric-lime bottom-6 right-6">
+  <Fragment set:html={ArrowUpCircle} />
+</div>
+
+<script>
+  function debounce(func, wait: number) {
+    let timeout: number;
+    return function (...args) {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func.apply(this, args), wait);
+    };
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const buttonUp = document.getElementById("button-up");
+
+    if (buttonUp) {
+      buttonUp.addEventListener("click", () => {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      });
+
+      const handleScroll = debounce(() => {
+        if (window.scrollY > 100) {
+          buttonUp.classList.add("opacity-100");
+        } else {
+          buttonUp.classList.remove("opacity-100");
+        }
+      }, 50);
+
+      window.addEventListener("scroll", handleScroll);
+    }
+  });
+</script>
