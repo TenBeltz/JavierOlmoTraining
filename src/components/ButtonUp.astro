@@ -1,0 +1,44 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style>
+    .ir-arriba {
+        display: none;
+        background-repeat: no-repeat;
+        font-size: 35px;
+        cursor: pointer;
+        color: rgb(133, 107, 52);
+        position: fixed;
+        bottom: 30px;
+        right: 40px;
+        z-index: 2;
+    }
+</style>
+
+<a class="ir-arriba" href="javascript:void(0)" title="Volver arriba">
+    <span class="fa-stack">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-arrow-up fa-stack-1x fa-inverse"></i>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const irArriba = document.querySelector('.ir-arriba') as HTMLElement;
+
+        if (irArriba) {
+            irArriba.addEventListener('click', function () {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            window.addEventListener('scroll', function () {
+                if (window.scrollY > 100) {
+                    (irArriba as HTMLElement).style.display = 'block';
+                } else {
+                    (irArriba as HTMLElement).style.display = 'none';
+                }
+            });
+        }
+    });
+</script>
