@@ -1,9 +1,18 @@
 ---
-const { title, description } = Astro.props;
+import SEO from "../components/SEO.astro"
+
+interface Props {
+	title: string
+	description: string
+	canonical?: string
+	image?: string
+}
+
+const { title, description, canonical, image } = Astro.props
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="es" class="overflow-x-hidden">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="description" content={description} />
@@ -11,14 +20,19 @@ const { title, description } = Astro.props;
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
+		<SEO
+			canonical={canonical}
+			description={description}
+			image={image}
+			title={title}
+		/>
 	</head>
 	<body class="overflow-x-hidden bg-black">
 		<slot />
+		<style is:global>
+			html {
+				scroll-behavior: smooth;
+			}
+		</style>
 	</body>
 </html>
-
-<style>
-	html {
-		scroll-behavior: smooth;
-	}
-</style>
