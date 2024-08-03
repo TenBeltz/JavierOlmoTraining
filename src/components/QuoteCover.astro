@@ -1,0 +1,18 @@
+---
+import { Image } from 'astro:assets';
+import quoteImage  from '../../public/images/quote/imagenCita.png';
+---
+<section class="relative w-full h-full">
+    <div class="absolute top-[6%] left-[20%] w-[200px] sm:top-[25%] sm:left-[10%] sm:w-[720px] z-10">
+      <h3 class="font-medium text-white text-4xl sm:text-5xl">
+        <span class="text-electric-lime font-extrabold text-6xl -left-[32%]">"</span>
+        <span>Sin hacer y sin sudar no cambiamos a nivel emocional.</span>
+        <span class="text-electric-lime font-extrabold text-6xl absolute left-[95%]">"</span>
+      </h3>
+      <div class="absolute -bottom-[38px] sm:-bottom-[60px] font-extrabold text-white text-2xl">Javier Olmo</div>
+    </div>
+    <div class="w-full h-[515px] sm:h-[525px]">
+      <Image src={quoteImage} alt="cita motivacional" class="object-cover w-full h-full" />
+    </div>
+  </section>
+  
