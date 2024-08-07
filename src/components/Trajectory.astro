@@ -1,3 +1,10 @@
-<section>
-  
-</section>
+---
+import Image from "astro/components/Image.astro"
+import trajectoryImg from "../../public/images/trajectory/trajectory.png"
+---
+
+<article class="flex flex-col items-center justify-center gap-y-2">
+  <h2 class="w-full p-4 text-3xl font-bold text-center bg-electric-lime">Trayectoria profesional</h2>
+  <h3 class="text-xl font-semibold text-electric-lime">+13 años de experiencia en la élite</h3>
+  <Image src={trajectoryImg} alt="Trayectoria"/>
+</article>
