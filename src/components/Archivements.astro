@@ -1,3 +1,17 @@
+---
+import { Image } from 'astro:assets';
+
+import javierConTrofeo from '../../public/images/javier/javier-con-trofeo.jpg';
+import javierFootball from '../../public/images/javier/javier-football.jpg';
+import javierPana from '../../public/images/javier/javier-pana.jpg';
+
+const javierImages = [
+  javierConTrofeo,
+  javierFootball,
+  javierPana
+];
+---
+
 <article class="flex flex-col items-center gap-10 p-10 text-white lg:flex-row justify-evenly">
   <div class="flex justify-center flex-1">
     <p class="w-56 text-2xl font-bold text-center">
@@ -39,3 +53,11 @@
     </ul>
   </div>
 </article>
+
+<div class="flex gap-2 sm:gap-4 md:gap-6 lg:gap-10 px-10 h-min">
+  {javierImages.map(javierImage => (
+    <div class="flex-1">
+      <Image src={javierImage} alt="Javier Olmo" class="object-cover w-full h-full"/>
+    </div>
+  ))}
+</div>
