@@ -1,0 +1,22 @@
+---
+import { Image } from "astro:assets";
+import Logo from "../../public/favicon.svg";
+---
+
+<section class="w-full h-96 text-white flex flex-col md:flex-row">
+    <div class="w-full md:w-1/5 h-40 md:h-full">
+        <Image
+            src={Logo}
+            alt="Javier Olmo con un trofeo"
+            class:list={"h-full w-full"}
+        />
+    </div>
+    <div class="w-full md:w-4/5 h-56 md:h-full text-center md:text-left flex flex-col items-center md:justify-center md:items-start">
+        <h2 class="w-full md:ml-8 text-2xl font-bold md:text-4xl">Servicios</h2>
+        <h4 class="w-full md:w-1/2 md:ml-8 text-center font-bold md:text-2xl">
+            Experto en <span class="text-electric-lime">optimizar</span> el <span
+                class="text-electric-lime">rendimiento</span
+            > y la <span class="text-electric-lime">readaptación</span> de lesiones
+        </h4>
+    </div>
+</section>

@@ -1,0 +1,103 @@
+---
+
+---
+
+<section class="w-full h-full flex flex-col justify-center items-center">
+    <h2 class="text-4xl text-center font-semibold text-white">Formulario de contacto</h2>
+    <div class="w-full p-5 flex">
+        <!-- Formulario -->
+        <form action="" method="post" class="w-full h-full flex justify-center items-center">
+        <div class="w-full sm:w-1/3 h-full flex flex-col gap-5">
+                <div class="flex flex-col gap-2">
+                    <label for="name" class="text-white">Nombre Completo</label>
+                    <input
+                        type="text"
+                        name="name"
+                        id="name"
+                        class="p-2 rounded-md"
+                    />
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="email" class="text-white">Email</label>
+                    <input
+                        type="email"
+                        name="email"
+                        id="email"
+                        class="p-2 rounded-md"
+                    />
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="phone" class="text-white">Móvil</label>
+                    <input
+                        type="tel"
+                        name="phone"
+                        id="phone"
+                        class="p-2 rounded-md"
+                    />
+                </div>
+                <div class="flex flex-col w-1/2 sm:flex-row gap-2">
+                    <div class="flex flex-col gap-2">
+                        <label for="country" class="text-white">País</label>
+                        <input
+                            type="text"
+                            name="country"
+                            id="country"
+                            class="p-2 rounded-md"
+                        />
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label for="city" class="text-white">Ciudad</label>
+                        <input
+                            type="text"
+                            name="city"
+                            id="city"
+                            class="p-2 rounded-md"
+                        />
+                    </div>
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="message" class="text-white"
+                        >Mensaje (opcional)</label
+                    >
+                    <textarea
+                        name="message"
+                        id="message"
+                        class="p-2 rounded-md"
+                        placeholder="Aquí puedes contarme el deporte que practicas y qué estás buscando, te contestaré lo antes posible"
+                    ></textarea>
+                </div>
+                <!-- Aceptar politicas -->
+                <div class="flex flex-row gap-2 items-center">
+                    <input
+                        type="checkbox"
+                        name="accept"
+                        id="accept"
+                        class="p-2 rounded-md"
+                    />
+                    <label for="accept" class="text-white"
+                        >He leído y acepto el <a href="#">aviso legal</a> y la <a href="#">política de privacidad</a></label
+                    >
+                </div>
+                <button
+                    type="submit"
+                    class="bg-electric-lime text-black p-2 rounded-md"
+                    >Enviar</button
+                >
+
+        </div>
+        <div class="w-1/3 h-full text-white ml-5">
+            <h3 class="text-electric-lime font-bold text-4xl">Servicio</h3>
+            <select name="service" id="service" class="w-full bg-white text-black py-2 rounded-lg">
+                <option value="1">Ninguno</option>
+                <option value="2">Supreme</option>
+                <option value="3">Élite</option>
+                <option value="4">Excellence</option>
+                <option value="5">Platinum</option>
+                <option value="6">Mentoría</option>
+            </select>
+        </div>
+    </form>
+        <!-- Seleccion servicios -->
+        <div></div>
+    </div>
+</section>
