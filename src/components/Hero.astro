@@ -1,13 +1,13 @@
 ---
 import { Image } from 'astro:assets';
 import backgroundImage from '../../public/images/hero-bg.png';
-import logo from '../../public/favicon.svg';
+import Logo from '../../public/favicon.svg';
 ---
 
 <section class="relative h-screen bg-no-repeat bg-cover">
   <Image src={backgroundImage} alt="Imagen de fondo" class="absolute inset-0 w-full h-full object-cover -z-10"/>
   <div class="flex flex-col items-center justify-start h-full">
-    <Image src={logo} alt="Logo" class="w-96"/>
+    <Image src={Logo} alt="Logo" class="w-96"/>
     <h1 class="w-10/12 text-4xl font-bold text-white sm:text-5xl md:w-8/12 lg:w-4/12">
       <slot />
     </h1>
