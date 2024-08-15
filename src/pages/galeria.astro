@@ -1,0 +1,78 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Hero from "../components/Hero.astro";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import ServicesCover from "../components/ServicesCover.astro";
+import Services from "../components/Services.astro";
+---
+
+<Layout canonical="" description="Javier Olmo" image="" title="Javier Olmo">
+  <main>
+    <Hero>
+      Experto en
+      <strong class="text-electric-lime">optimizar</strong>
+      el
+      <strong class="text-electric-lime">rendimiento</strong>
+      y la readaptación de
+      <strong class="text-electric-lime">lesiones</strong>
+    </Hero>
+    <Header />
+    <section class="w-full flex justify-center items-center mt-4">
+      <div
+        class="w-10/12 h-full flex flex-wrap sm:overflow-hidden justify-center gap-10"
+        id="galerias"
+      >
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<script>
+  let galeriasURL = "https://www.padelchiquito.com/api/jolmo/galerias/";
+  let galerias = [];
+  let galeriasHTML = "";
+
+  fetch(galeriasURL)
+    .then((response) => response.json())
+    .then((data) => {
+      galerias = data;
+      galerias.forEach((galeria) => {
+        let mediaHTML = "";
+
+        if (galeria.video) {
+          mediaHTML = `
+            <video class="w-full h-full rounded-lg" controls>
+              <source src="https://www.padelchiquito.com${galeria.video}" type="video/mp4">
+              Tu navegador no soporta la etiqueta de video.
+            </video>
+          `;
+        } else if (galeria.imagen) {
+          mediaHTML = `
+            <img class="w-full h-full bg-contain rounded-lg" src="https://www.padelchiquito.com${galeria.imagen}" alt="">
+          `;
+        }
+
+        galeriasHTML += `
+          <article class="bg-white w-60 h-96 md:h-128 md:w-96 flex flex-col items-center rounded-lg overflow-y-hidden">
+            <div class="bg-electric-lime w-full h-5 rounded-t-lg"></div>
+            <div class="w-10/12 mt-2">
+              <h1 class="font-bold text-2xl">${galeria.titulo}</h1>
+            </div>
+            <div class="w-full h-2/5 flex flex-col items-center">
+              <div class="w-10/12 h-full">
+                ${mediaHTML}
+              </div>
+            </div>
+            <div class="w-10/12 h-32 md:h-60 overflow-y-auto">
+              ${galeria.descripcion}
+            </div>
+          </article>
+        `;
+      });
+    })
+    .then(() => {
+      document.querySelector("#galerias").innerHTML = galeriasHTML;
+    });
+</script>
