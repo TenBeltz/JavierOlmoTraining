@@ -1,6 +1,10 @@
 ---
 import { Image } from 'astro:assets';
 import Logo from '../../public/favicon.svg';
+import InstagramIcon from '../../public/images/footer/5.png';
+import TwitterIcon from '../../public/images/footer/6.png';
+import LinkedinIcon from '../../public/images/footer/7.png';
+import TiktokIcon from '../../public/images/footer/7.png';
 ---
 <footer class="flex items-center justify-center w-full px-10 py-4 text-xs text-white lg:py-16 lg:text-sm">
   <div class="flex flex-col lg:flex-row justify-evenly gap-x-20">
@@ -9,15 +13,17 @@ import Logo from '../../public/favicon.svg';
     </div>
     <div class="flex flex-col lg:flex-row gap-y-4 gap-x-20">
       <ul class="flex flex-col sm:flex-row">
-        <li><a href="https://www.facebook.com/javier.olmosanchez"></a></li>
-        <li><a href="https://www.instagram.com/javiolmo12/">Instagrama</a></li>
-        <li><a href="https://www.linkedin.com/in/javier-olmo-s%C3%A1nchez-48984882/">LinkedIn</a></li>
+        <li><a href="https://www.facebook.com/javier.olmosanchez"><Image src={InstagramIcon} alt="Logo" class="w-8"/></a></li>
+        <li><a href="https://twitter.com/javierolmo_"><Image src={TwitterIcon} alt="Logo" class="w-8"/></a></li>
+        <li><a href="https://www.linkedin.com/in/javier-olmo-s%C3%A1nchez-7b0b3b1b3/"><Image src={LinkedinIcon} alt="Logo" class="w-8"/></a></li>
+        <li><a href="https://www.tiktok.com/@javierolmo_"><Image src={TiktokIcon} alt="Logo" class="w-8"/></a></li>
       </ul>
 
       <ul class="flex flex-col">
         <li><a href="#">Política de Cookies</a></li>
         <li><a href="#">Política de Privacidad</a></li>
         <li><a href="#">Aviso Legal</a></li>
+        <li><a href="entrena-conmigo/#FAQ">Preguntas frecuentes</a></li>
       </ul>
     
       <address class="flex flex-col not-italic">
