@@ -6,28 +6,31 @@ import TwitterIcon from '../../public/images/footer/6.png';
 import LinkedinIcon from '../../public/images/footer/7.png';
 import TiktokIcon from '../../public/images/footer/8.png';
 ---
-<footer class="flex items-center justify-center w-full px-10 py-4 text-xs text-white lg:py-16 lg:text-sm">
+<footer class="flex items-center justify-center w-full px-10 py-4 text-white lg:text-sm">
   <div class="flex flex-col lg:flex-row justify-evenly gap-x-20">
     <div class="flex justify-evenly">
       <Image src={Logo} alt="Logo" class="w-32"/>
     </div>
     <div class="flex flex-col lg:flex-row gap-y-4 gap-x-20">
-      <ul class="flex flex-col sm:flex-row">
+      <div>
+        <h4 class="text-2xl text-electric-lime text-center font-bold">Contacto</h4>
+        <address class="flex flex-col not-italic items-center justify-center">
+          <a href="mailto:olmo.readaptador@gmail.com" class="text-lg">olmo.readaptador@gmail.com</a>
+          <span>Copyright 2024 Javier Olmo</span>
+        </address>
+
+        <ul class="flex items-center justify-evenly gap-x-16 underline">
+          <li><a href="/cookies">Política de Cookies</a></li>
+          <li><a href="/privacy">Política de Privacidad</a></li>
+          <!-- <li><a href="entrena-conmigo/#FAQ">Preguntas frecuentes</a></li> -->
+        </ul>
+      </div>
+
+      <ul class="flex flex-col sm:flex-row items-center justify-center">
         <li><a href="https://www.instagram.com/javierolmotraining?igsh=ZHMybWV2YWMyajBq&utm_source=qr"><Image src={InstagramIcon} alt="Logo" class="w-8"/></a></li>
         <li><a href="https://www.linkedin.com/in/javier-olmo-s%C3%A1nchez-48984882?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app"><Image src={LinkedinIcon} alt="Logo" class="w-8"/></a></li>
         <li><a href="https://www.tiktok.com/@javierolmotrainin?_t=8owqTX7lyGv&_r=1"><Image src={TiktokIcon} alt="Logo" class="w-8"/></a></li>
       </ul>
-
-      <ul class="flex flex-col">
-        <li><a href="/cookies">Política de Cookies</a></li>
-        <li><a href="/privacy">Política de Privacidad</a></li>
-        <li><a href="entrena-conmigo/#FAQ">Preguntas frecuentes</a></li>
-      </ul>
-    
-      <address class="flex flex-col not-italic">
-        <a href="mailto:olmo.readaptador@gmail.com">olmo.readaptador@gmail.com</a>
-        <a href="tel:+34665466332">Copyright 2024 Javier Olmo</a>
-      </address>
     </div>
   </div>
 </footer>
