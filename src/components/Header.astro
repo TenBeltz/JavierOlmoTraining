@@ -2,7 +2,7 @@
 import HeaderItem from "./HeaderItem.astro";
 const headerElements = [
   {
-    url: '/conoceme',
+    url: '/conoceme/',
     title: 'Conóceme'
   },
   {
@@ -10,11 +10,11 @@ const headerElements = [
     title: 'Biblioteca de ejercicios'
   },
   {
-    url: 'galeria',
+    url: '/galeria/',
     title: 'Galería'
   },
 /*  {
-    url: 'entrena-conmigo',
+    url: '/entrena-conmigo/',
     title: 'Entrena conmigo'
   }*/
 ]
@@ -27,7 +27,7 @@ const headerElements = [
         <HeaderItem url={element.url} title={element.title} />
       ))}
         <li class="flex-grow text-2xl font-bold text-white hover:shadow-header-element hover:cursor-pointer">
-          <a href="entrena-conmigo" class="block py-6 h-full w-full">
+          <a href="/entrena-conmigo/" class="block py-6 h-full w-full">
             <span class="bg-electric-lime text-black p-4 rounded-full">Entrena conmigo</span>
           </a>
         </li>
