@@ -1,6 +1,6 @@
 <section class="w-full flex flex-col gap-y-4 justify-center items-center text-white">
   <h2 id="contact-form-section" class="text-4xl text-center font-semibold">Formulario de contacto</h2>
-	<form class="grid grid-cols-2 p-4 gap-3" method="post">
+	<form class="grid grid-cols-2 p-4 gap-3 w-full max-w-xl" method="post">
 		<label class="flex flex-col gap-y-1 col-span-2" for="name">
 			<span>Nombre completo</span>
 			<input type="text" name="name" id="name" class="rounded-md py-1.5 px-2" required>
@@ -36,7 +36,7 @@
 				<option value="Mentoria">Mentoría</option>
 			</select>
 		</label>
-		<label for="accept" class="flex items-center gap-x-1.5">
+		<label for="accept" class="flex items-center col-span-2 gap-x-1.5">
 			<input type="checkbox" name="accept" id="accept" required>
 			<p>He leído y acepto el <a href="#">aviso legal</a> y la <a href="#">política de privacidad</a></p>
 		</label>
