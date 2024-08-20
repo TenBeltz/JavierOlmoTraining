@@ -2,23 +2,24 @@
 import { Image } from 'astro:assets';
 import Questions from '../../public/images/services/questions.png';
 ---
-<div class="w-full flex flex-col items-center justify-center my-4" id="FAQ">
+
+<div class="flex flex-col items-center justify-center w-full mb-10" id="FAQ">
   <h3 class="text-5xl font-bold text-white">FAQ</h3>
-  <p class="text-white font-semibold">Preguntas frecuentes</p>
+  <span class="font-semibold text-white">Preguntas frecuentes</span>
 </div>
 
-<section class="w-full h-fit flex flex-col items-center md:flex-row justify-center space-y-5 md:space-y-0 md:space-x-4">
-  <div class="w-10/12 md:w-1/4 flex flex-col space-y-4" id="faq-section">
+<section class="flex flex-col items-center justify-center w-full mb-10 space-y-5 h-fit md:space-y-0 md:space-x-4">
+  <div class="flex flex-col w-10/12 space-y-4 md:w-1/4" id="faq-section">
   </div>
 
-  <div class="w-10/12 md:w-1/4 h-fit flex justify-center items-center flex-col space-y-1">
-    <div class="w-full flex justify-center">
+  <div class="flex flex-col items-center justify-center w-10/12 space-y-1 md:w-1/4 h-fit">
+    <div class="flex justify-center w-full">
       <Image src={Questions} alt="Logo" class="w-40"/>
     </div>
-    <h3 class="text-2xl text-white font-bold">¿Alguna pregunta más?</h3>
-    <h5 class="text-white text-md text-center">Déjame tus dudas en el correo y me pondré en contacto contigo</h5>
-    <div class="px-4 flex items-center bg-white h-10 rounded-xl text-center w-fit">
-      hola@javierolmotraining.es
+    <h3 class="text-2xl font-bold text-white">¿Alguna pregunta más?</h3>
+    <h5 class="text-center text-white text-md">Déjame tus dudas en el correo y me pondré en contacto contigo</h5>
+    <div class="flex items-center h-10 px-4 text-center bg-white rounded-xl w-fit">
+      <a href="mailto:hola@javierolmotraining.es">hola@javierolmotraining.es</a>
     </div>
   </div>
 </section>
@@ -30,14 +31,13 @@ import Questions from '../../public/images/services/questions.png';
   // Función para crear el HTML de cada FAQ
   function createFAQItem(pregunta, respuesta) {
     return `
-<div class="faq-item h-auto w-full">
-  <div class="w-full bg-white rounded-lg px-2 py-2 flex items-center flex-row justify-between relative">
-    <h4 class="text-lg font-semibold">${pregunta}</h4>
-    <button class="toggle-button text-white bg-electric-lime rounded-full w-6 h-6 font-extrabold">+</button>
-  </div>
-  <p class="text-white mt-2 hidden w-full break-words">${respuesta}</p>
-</div>
-
+      <div class="w-full h-auto faq-item">
+        <div class="relative flex flex-row items-center justify-between w-full px-2 py-2 bg-white rounded-lg">
+          <h4 class="text-lg font-semibold">${pregunta}</h4>
+          <button class="w-6 h-6 font-extrabold text-white rounded-full toggle-button bg-electric-lime">+</button>
+        </div>
+        <p class="hidden w-full mt-2 text-white break-words">${respuesta}</p>
+      </div>
     `;
   }
 
