@@ -5,6 +5,9 @@ import javierConTrofeo from '../../public/images/javier/javier-con-trofeo.jpg';
 import javierFootball from '../../public/images/javier/javier-football.jpg';
 import javierPana from '../../public/images/javier/javier-pana.jpg';
 
+import medalla from '../../public/images/achievments/medalla.png';
+import trofeo from '../../public/images/achievments/trofeo.png';
+
 const javierImages = [
   javierConTrofeo,
   javierFootball,
@@ -20,50 +23,50 @@ const javierImages = [
 
 const javierAchievments = [
   {
-    icon : "icon - ",
+    icon : medalla,
     year : "2016",
     text : "Subcampeón Supercopa España",
     strong : false
   },
   {
-    icon : "icon - ",
+    icon : medalla,
     year : "2016",
     text : "Subcampeón Supercopa Europa",
     strong : false
   },
   {
-    icon : "icon - ",
+    icon : trofeo,
     year : "2016",
     text : "Campeón UEFA Europa League",
     strong : true
   },
   {
-    icon : "icon - ",
+    icon : trofeo,
     year : "2015",
     text : "Campeón UEFA Europa League",
     strong : true
   },
   {
-    icon : "icon - ",
+    icon : medalla,
     year : "2015",
     text : "Subcampeón Supercopa Europa",
     strong : false
   },
   {
-    icon: "icon - ",
+    icon: trofeo,
     text: "Campeón ATP Marrakech 250 (P. Andújar)",
   },
   {
-    icon: "icon - ",
+    icon: medalla,
     text: "5 temporadas seguidas TOP 100 (P. Andújar)",
     true: true
   },
   {
-    icon: "icon - ",
+    icon: medalla,
     text: "Octavos de final US OPEN (P. Andújar)",
   },
   {
-    icon: "icon - ",
+    icon: trofeo,
     text: "Olimpiadas Tokio 2020 (P. Andújar)",
     true: true
   }
@@ -91,7 +94,7 @@ const javierAchievments = [
     <ul>
       {javierAchievments.map(javierAchievment => (
         <li class="flex items-center gap-x-2">
-          <span>{javierAchievment.icon}</span>
+          <Image src={javierAchievment.icon} alt="Icono" class="w-6"/>
           <span>{javierAchievment.year ? javierAchievment.year + " " : ""}{javierAchievment.strong ? <strong class="text-electric-lime">{javierAchievment.text}</strong> : javierAchievment.text}</span>
         </li>
       ))}

@@ -56,6 +56,11 @@
     formData.append('message', document.getElementById('message').value);
     formData.append('service', document.getElementById('service').value);
 
+	if (!document.getElementsByName('accept')[0].checked) {
+	  alert('Debes aceptar el aviso legal y la política de privacidad.');
+	  return;
+	}
+
     const data = Object.fromEntries(formData);
 
     // Realiza una solicitud POST con los datos en formato JSON
