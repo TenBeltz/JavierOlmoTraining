@@ -59,7 +59,7 @@ const javierAchievments = [
   {
     icon: medalla,
     text: "5 temporadas seguidas TOP 100 (P. Andújar)",
-    true: true
+    strong: true
   },
   {
     icon: medalla,
@@ -68,7 +68,7 @@ const javierAchievments = [
   {
     icon: trofeo,
     text: "Olimpiadas Tokio 2020 (P. Andújar)",
-    true: true
+    strong: true
   }
  
 ];
@@ -94,7 +94,7 @@ const javierAchievments = [
     <ul>
       {javierAchievments.map(javierAchievment => (
         <li class="flex items-center gap-x-2">
-          <Image src={javierAchievment.icon} alt="Icono" class="w-6"/>
+          <Image src={javierAchievment.icon} alt="Icono" class="w-12"/>
           <span>{javierAchievment.year ? javierAchievment.year + " " : ""}{javierAchievment.strong ? <strong class="text-electric-lime">{javierAchievment.text}</strong> : javierAchievment.text}</span>
         </li>
       ))}
