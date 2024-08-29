@@ -11,6 +11,13 @@ const javierImages = [
   javierPana
 ];
 
+/*
+(icono trofeo) Campeón ATP Marrakech 250(P. Andújar)
+(icono medalla) 5 temporadas seguidas TOP 100 (P. Andújar)
+(icono medalla) Octavos de final US OPEN (P. Andújar)
+(icono medalla) Olimpiadas Tokio 2020 (P. Andújar)
+*/
+
 const javierAchievments = [
   {
     icon : "icon - ",
@@ -41,6 +48,24 @@ const javierAchievments = [
     year : "2015",
     text : "Subcampeón Supercopa Europa",
     strong : false
+  },
+  {
+    icon: "icon - ",
+    text: "Campeón ATP Marrakech 250 (P. Andújar)",
+  },
+  {
+    icon: "icon - ",
+    text: "5 temporadas seguidas TOP 100 (P. Andújar)",
+    true: true
+  },
+  {
+    icon: "icon - ",
+    text: "Octavos de final US OPEN (P. Andújar)",
+  },
+  {
+    icon: "icon - ",
+    text: "Olimpiadas Tokio 2020 (P. Andújar)",
+    true: true
   }
  
 ];
@@ -67,7 +92,7 @@ const javierAchievments = [
       {javierAchievments.map(javierAchievment => (
         <li class="flex items-center gap-x-2">
           <span>{javierAchievment.icon}</span>
-          <span>{javierAchievment.year} {javierAchievment.strong ? <strong class="text-electric-lime">{javierAchievment.text}</strong> : javierAchievment.text}</span>
+          <span>{javierAchievment.year ? javierAchievment.year + " " : ""}{javierAchievment.strong ? <strong class="text-electric-lime">{javierAchievment.text}</strong> : javierAchievment.text}</span>
         </li>
       ))}
     </ul>
