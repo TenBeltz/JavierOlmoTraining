@@ -30,6 +30,7 @@ export default {
 		},
 	},
 	plugins: [
+    require('flowbite/plugin'),
     function ({ addComponents }) {
       addComponents({
         '.card-side': {
