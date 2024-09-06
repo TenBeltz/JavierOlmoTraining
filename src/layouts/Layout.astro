@@ -5,10 +5,9 @@ interface Props {
 	title: string
 	description: string
 	canonical?: string
-	image?: string
 }
 
-const { title, description, canonical, image } = Astro.props
+const { title, description, canonical } = Astro.props
 ---
 
 <!doctype html>
@@ -23,7 +22,6 @@ const { title, description, canonical, image } = Astro.props
 		<SEO
 			canonical={canonical}
 			description={description}
-			image={image}
 			title={title}
 		/>
 	</head>
