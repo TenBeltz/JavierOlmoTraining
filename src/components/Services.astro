@@ -1,21 +1,43 @@
 ---
-const onlineServices = [
+interface Service {
+  title: string;
+  subtitle?: string;
+  caracteristics?: string[];
+  description: string;
+}
+
+const onlineServices: Service[] = [
 	{
-    name: 'supreme',
+    title: 'supreme',
     caracteristics: ['Tests', 'Preparación individual', 'Programación individualizada', 'Reunión semanal', 'Reunión mensual', 'Contacto vía whatsapp'],
     description: 'Ideal para deportistas profesionales que buscan una dedicación diaria y comunicación continua, con un servicio premium.'
   },
 	{
-    name: 'elite',
+    title: 'elite',
     caracteristics: ['Tests', 'Preparación individual', 'Programación individualizada', 'Reunión semanal', 'Reunión mensual'],
     description: 'Perfecto para deportistas comprometidos que desean optimizar su rendimiento con entrenamientos personalizados y asesoría semanal.'
   },
 	{
-    name: 'excellence',
+    title: 'excellence',
     caracteristics: ['Tests', 'Preparación individual', 'Programación individualizada', 'Reunión mensual'],
     description: 'Diseñado para deportistas que quieren mejorar su condición física y habilidades con sesiones de entrenamiento estructuradas y seguimiento mensual.'
   }
 ];
+
+const onsiteServices: Service[] = [
+  {
+    title: 'platinum',
+    description: 'Un servicio de entrenamiento presencial exclusivo, centrado en brindar una experiencia de alto nivel con atención personalizada y programas de entrenamiento intensivos.'
+  }
+]
+
+const professionalServices: Service[] = [
+  {
+    title: 'mentoría',
+    subtitle: 'Servicio exclusivo para profesionales de la preparación física y readaptadores',
+    description: 'Orientación personalizada, acceso a mi forma de trabajar y apoyo continuo para llevar tu carrera al siguiente nivel. Te ayudo a progresar profesionalmente y a utilizar todo tipo de herramientas para el control de la carga y la preparación del deportista'
+  }
+]
 ---
 
 <section>
@@ -27,7 +49,7 @@ const onlineServices = [
       {onlineServices.map(service => (
         <div class="flex flex-col mx-auto max-w-xs">
           <div class="bg-white flex-1 p-6 flex flex-col text-center text-gray-900 rounded-lg xl:p-8">
-            <h3 class="mb-4 text-2xl font-bold uppercase">{service.name}</h3>
+            <h3 class="mb-4 text-2xl font-bold uppercase">{service.title}</h3>
             <div class="mb-4 flex flex-col">
               <span class="font-bold text-lg">Punto de partida</span>
               <span>Objetivos</span>
@@ -49,58 +71,47 @@ const onlineServices = [
   </div>
 </section>
 
-<section class="w-full h-full flex flex-col items-center mt-10">
-  <div class="mx-auto max-w-screen-md mb-8 text-center">
-    <h2 class="text-4xl tracking-tight font-extrabold uppercase text-electric-lime">Servicios presenciales</h2>
-  </div>
-  <div class="h-96 relative bg-electric-lime w-96 sm:w-[500px] rounded-3xl overflow-hidden my-5 sm:m-5">
-    <h3 class="text-3xl font-bold text-center m-5">PLATINUM</h3>
-    <div class="w-full h-full bg-white rounded-t-3xl p-3 text-center flex flex-col justify-between">
-      <div>
-        <h5 class="font-bold text-lg">
-          Servicio exclusivo - limitado en plazas/ubicación
-        </h5>
-        <p class="mt-3">
-          Un servicio de entrenamiento presencial exclusivo, centrado en brindar
-          una experiencia de alto nivel con atención personalizada y programas
-          de entrenamiento intensivos.
-        </p>
-        <a
-          href="/#contact-form-section"
-          class="z-10 absolute left-14 bottom-0 bg-electric-lime w-3/4 rounded-2xl py-2 font-bold text-lg mb-3 self-center"
-        >
-          LO QUIERO
-        </a>
-      </div>
+<section>
+  <div class="py-8 px-4 mx-auto max-w-screen-lg lg:py-16 lg:px-6">
+    <div class="mx-auto max-w-screen-md mb-8 text-center">
+      <h2 class="text-4xl tracking-tight font-extrabold uppercase text-electric-lime">Servicios presenciales</h2>
+    </div>
+    <div class="space-y-8 lg:grid sm:gap-6 xl:gap-10 lg:space-y-0">
+      {onsiteServices.map(service => (
+        <div class="flex flex-col mx-auto max-w-sm">
+          <div class="bg-white flex-1 p-6 flex flex-col text-center text-gray-900 rounded-lg xl:p-8">
+            <h3 class="mb-4 text-2xl font-bold uppercase">{service.title}</h3>
+            <div class="mb-4 flex flex-col">
+              <span class="font-bold text-lg">Servicio exclusivo</span>
+              <span>limitado en plazas/ubicación</span>
+            </div>
+            <div class="mb-8">
+              <p>{service.description}</p>
+            </div>
+            <a href="/#contact-form-section" class="bg-electric-lime mt-auto font-medium rounded-lg uppercase px-5 py-2.5 text-center">Lo quiero</a>
+          </div>
+        </div>
+      ))}
     </div>
   </div>
 </section>
 
-<section class="w-full h-full flex flex-col items-center mt-10">
-  <div class="mx-auto max-w-screen-md text-center mb-8">
-    <h2 class="text-4xl tracking-tight font-extrabold uppercase text-electric-lime">Servicios para profesionales</h2>
-  </div>
-  <div class="h-96 relative bg-electric-lime w-96 sm:w-[500px] rounded-3xl overflow-hidden my-5 sm:m-5">
-    <h3 class="text-3xl font-bold text-center m-5">MENTORÍA</h3>
-    <div class="w-full h-full bg-white rounded-t-3xl p-3 text-center flex flex-col justify-between">
-      <div>
-        <h5 class="font-bold text-lg">
-          Servicio exclusivo para profesionales de la preparación física y
-          readaptadores
-        </h5>
-        <p class="mt-3">
-          Orientación personalizada, acceso a mi forma de trabajar y apoyo
-          continuo para llevar tu carrera al siguiente nivel. Te ayudo a
-          progresar profesionalmente y a utilizar todo tipo de herramientas para
-          el control de la carga y la preparación del deportista
-        </p>
-        <a
-          href="/#contact-form-section"
-          class="z-10 absolute left-14 bottom-0 bg-electric-lime w-3/4 rounded-2xl py-2 font-bold text-lg mb-3 self-center"
-        >
-          LO QUIERO
-        </a>
-      </div>
+<section>
+  <div class="py-8 px-4 mx-auto max-w-screen-lg lg:py-16 lg:px-6">
+    <div class="mx-auto max-w-screen-md mb-8 text-center">
+      <h2 class="text-4xl tracking-tight font-extrabold uppercase text-electric-lime">Servicios para profesionales</h2>
+    </div>
+    <div class="space-y-8 lg:grid sm:gap-6 xl:gap-10 lg:space-y-0">
+      {professionalServices.map(service => (
+        <div class="flex flex-col mx-auto max-w-sm">
+          <div class="bg-white flex-1 p-6 flex flex-col text-center text-gray-900 rounded-lg xl:p-8">
+            <h3 class="mb-4 text-2xl font-bold uppercase">{service.title}</h3>
+            <h5 class="mb-4 font-semibold">{service.subtitle}</h5>
+            <p class="mb-8">{service.description}</p>
+            <a href="/#contact-form-section" class="bg-electric-lime mt-auto font-medium rounded-lg uppercase px-5 py-2.5 text-center">Lo quiero</a>
+          </div>
+        </div>
+      ))}
     </div>
   </div>
 </section>
