@@ -41,17 +41,17 @@ const professionalServices: Service[] = [
 ---
 
 <section>
-  <div class="py-8 px-4 mx-auto max-w-screen-lg lg:py-16 lg:px-6">
-    <div class="mx-auto max-w-screen-md text-center mb-8 lg:mb-12">
-      <h2 class="mb-4 text-4xl tracking-tight font-extrabold uppercase text-electric-lime">Servicios online</h2>
+  <div class="max-w-screen-lg px-4 py-8 mx-auto lg:py-16 lg:px-6">
+    <div class="max-w-screen-md mx-auto mb-8 text-center lg:mb-12">
+      <h2 class="mb-4 text-4xl font-extrabold tracking-tight uppercase text-electric-lime">Servicios online</h2>
     </div>
     <div class="space-y-8 lg:grid lg:grid-cols-3 sm:gap-6 xl:gap-10 lg:space-y-0">
       {onlineServices.map(service => (
-        <div class="flex flex-col mx-auto max-w-xs">
-          <div class="bg-white flex-1 p-6 flex flex-col text-center text-gray-900 rounded-lg xl:p-8">
+        <div class="flex flex-col max-w-xs mx-auto">
+          <div class="flex flex-col flex-1 p-6 text-center text-gray-900 bg-white rounded-lg xl:p-8">
             <h3 class="mb-4 text-2xl font-bold uppercase">{service.title}</h3>
-            <div class="mb-4 flex flex-col">
-              <span class="font-bold text-lg">Punto de partida</span>
+            <div class="flex flex-col mb-4">
+              <span class="text-lg font-bold">Punto de partida</span>
               <span>Objetivos</span>
             </div>
             <ul role="list" class="mb-8 space-y-2 text-left">
@@ -64,7 +64,7 @@ const professionalServices: Service[] = [
             </ul>
             <a href="/#contact-form-section" class="bg-electric-lime mt-auto font-medium rounded-lg uppercase px-5 py-2.5 text-center">Lo quiero</a>
           </div>
-          <p class="text-white mt-6 text-center">{service.description}</p>
+          <p class="mt-6 text-center text-white">{service.description}</p>
         </div>
 			))}
     </div>
@@ -72,17 +72,17 @@ const professionalServices: Service[] = [
 </section>
 
 <section>
-  <div class="py-8 px-4 mx-auto max-w-screen-lg lg:py-16 lg:px-6">
-    <div class="mx-auto max-w-screen-md mb-8 text-center">
-      <h2 class="text-4xl tracking-tight font-extrabold uppercase text-electric-lime">Servicios presenciales</h2>
+  <div class="max-w-screen-lg px-4 py-8 mx-auto lg:py-16 lg:px-6">
+    <div class="max-w-screen-md mx-auto mb-8 text-center">
+      <h2 class="text-4xl font-extrabold tracking-tight uppercase text-electric-lime">Servicios presenciales</h2>
     </div>
     <div class="space-y-8 lg:grid sm:gap-6 xl:gap-10 lg:space-y-0">
       {onsiteServices.map(service => (
-        <div class="flex flex-col mx-auto max-w-sm">
-          <div class="bg-white flex-1 p-6 flex flex-col text-center text-gray-900 rounded-lg xl:p-8">
+        <div class="flex flex-col max-w-sm mx-auto">
+          <div class="flex flex-col flex-1 p-6 text-center text-gray-900 bg-white rounded-lg xl:p-8">
             <h3 class="mb-4 text-2xl font-bold uppercase">{service.title}</h3>
-            <div class="mb-4 flex flex-col">
-              <span class="font-bold text-lg">Servicio exclusivo</span>
+            <div class="flex flex-col mb-4">
+              <span class="text-lg font-bold">Servicio exclusivo</span>
               <span>limitado en plazas/ubicación</span>
             </div>
             <div class="mb-8">
@@ -97,14 +97,14 @@ const professionalServices: Service[] = [
 </section>
 
 <section>
-  <div class="py-8 px-4 mx-auto max-w-screen-lg lg:py-16 lg:px-6">
-    <div class="mx-auto max-w-screen-md mb-8 text-center">
-      <h2 class="text-4xl tracking-tight font-extrabold uppercase text-electric-lime">Servicios para profesionales</h2>
+  <div class="max-w-screen-lg px-4 py-8 mx-auto lg:py-16 lg:px-6">
+    <div class="max-w-screen-md mx-auto mb-8 text-center">
+      <h2 class="text-4xl font-extrabold tracking-tight uppercase text-electric-lime">Servicios para profesionales</h2>
     </div>
     <div class="space-y-8 lg:grid sm:gap-6 xl:gap-10 lg:space-y-0">
       {professionalServices.map(service => (
-        <div class="flex flex-col mx-auto max-w-sm">
-          <div class="bg-white flex-1 p-6 flex flex-col text-center text-gray-900 rounded-lg xl:p-8">
+        <div class="flex flex-col max-w-sm mx-auto">
+          <div class="flex flex-col flex-1 p-6 text-center text-gray-900 bg-white rounded-lg xl:p-8">
             <h3 class="mb-4 text-2xl font-bold uppercase">{service.title}</h3>
             <h5 class="mb-4 font-semibold">{service.subtitle}</h5>
             <p class="mb-8">{service.description}</p>

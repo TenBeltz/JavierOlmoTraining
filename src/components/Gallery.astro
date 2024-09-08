@@ -1,0 +1,37 @@
+---
+interface GalleryItem {
+  idGaleria: number;
+  titulo: string;
+  imagen?: string;
+  video?: string;
+  descripcion: string;
+}
+
+const response: Response = await fetch('https://www.padelchiquito.com/api/jolmo/galerias/');
+const data: GalleryItem[] = await response.json();
+---
+
+<section id="gallery" class="text-white">
+  <h2 class="w-full p-4 text-3xl font-bold text-center text-black bg-electric-lime">Galería</h2>
+  <div class="max-w-screen-lg px-4 py-8 mx-auto lg:py-16 lg:px-6">
+    <div class="grid gap-4 lg:grid-cols-2 sm:gap-6 md:gap-8 xl:gap-10">
+      {data.map(({ titulo, imagen, video, descripcion }) => (
+        <div class="flex flex-col flex-1 gap-2 p-6 text-gray-900 bg-white rounded-lg xl:p-6">
+          <h3 class="text-2xl font-bold">{titulo}</h3>
+          <div class="w-full h-auto overflow-hidden">
+            {imagen && (
+              <img src={`https://www.padelchiquito.com${imagen}`} alt={titulo} class="w-full h-full rounded-lg" />
+            )}
+            {video && (
+              <video controls class="w-full h-full rounded-lg">
+                <source src={`https://www.padelchiquito.com${video}`} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            )}
+          </div>
+          <p set:html={descripcion}></p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
