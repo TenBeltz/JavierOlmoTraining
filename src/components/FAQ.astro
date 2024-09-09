@@ -1,84 +1,79 @@
 ---
 import { Image } from 'astro:assets';
 import Questions from '../../public/images/services/questions.png';
+
+interface FAQ {
+  idFAQ: number;
+  pregunta: string;
+  respuesta: string;
+}
+
+const contactEmail = 'hola@javierolmotraining.es';
+
+let data: FAQ[] = [];
+
+try {
+  const response: Response = await fetch('https://www.padelchiquito.com/api/jolmo/faqs/');
+  
+  if (!response.ok) {
+    throw new Error('Failed to fetch FAQs');
+  }
+  
+  data = await response.json();
+} catch (error) {
+  console.error('Error fetching FAQs:', error);
+}
 ---
 
-<div class="flex flex-col items-center justify-center w-full mb-10" id="FAQ">
-  <h3 class="text-5xl font-bold text-white">FAQ</h3>
-  <span class="font-semibold text-white">Preguntas frecuentes</span>
-</div>
-
 <section class="flex flex-col items-center justify-center w-full mb-10 space-y-5 h-fit md:space-y-0 md:space-x-4">
-  <div class="flex flex-col w-10/12 space-y-4 md:w-1/4" id="faq-section">
+  <div class="flex flex-col items-center justify-center w-full mb-10" id="FAQ">
+    <h3 class="text-5xl font-bold text-white">FAQ</h3>
+    <span class="font-semibold text-white">Preguntas frecuentes</span>
   </div>
 
-  <div class="flex flex-col items-center justify-center w-10/12 space-y-1 md:w-1/4 h-fit">
+  <div class="flex flex-col items-center justify-center px-4 gap-y-2">
     <div class="flex justify-center w-full">
       <Image src={Questions} alt="Logo" class="w-40"/>
     </div>
-    <h3 class="text-2xl font-bold text-white">¿Alguna pregunta más?</h3>
-    <h5 class="text-center text-white text-md">Déjame tus dudas en el correo y me pondré en contacto contigo</h5>
-    <div class="flex items-center h-10 px-4 text-center bg-white rounded-xl w-fit">
-      <a href="mailto:hola@javierolmotraining.es">hola@javierolmotraining.es</a>
+    <div class="flex flex-col w-full max-w-2xl gap-y-2">
+      {data.map(({ pregunta, respuesta }) => (
+        <div class="flex flex-col w-full faq-item">
+          <div class="relative flex items-center justify-between w-full p-2 bg-white rounded-lg gap-x-2">
+            <h4 class="text-lg font-semibold question">{pregunta}</h4>
+            <button class="flex items-center justify-center font-extrabold text-white rounded-full min-h-6 min-w-6 bg-electric-lime">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="hidden size-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14" />
+              </svg>
+            </button>
+          </div>
+          <p class="w-full pl-2 overflow-hidden text-white break-words transition-all max-h-0">{respuesta}</p>
+        </div>
+      ))}
+    </div>
+    <div class="flex flex-col items-center gap-2">
+      <h3 class="text-2xl font-bold text-white">¿Alguna pregunta más?</h3>
+      <h5 class="text-center text-white text-md">Déjame tus dudas en el correo y me pondré en contacto contigo</h5>
+      <a class="flex items-center justify-center h-10 px-4 text-center bg-white rounded-xl w-fit" href="mailto:hola@javierolmotraining.es">{contactEmail}</a>
     </div>
   </div>
 </section>
 
 <script>
-  // URL de la API
-  const apiUrl = 'https://www.padelchiquito.com/api/jolmo/faqs/';
-
-  // Función para crear el HTML de cada FAQ
-  function createFAQItem(pregunta, respuesta) {
-    return `
-      <div class="w-full h-auto faq-item">
-        <div class="relative flex flex-row items-center justify-between w-full px-2 py-2 bg-white rounded-lg">
-          <h4 class="text-lg font-semibold">${pregunta}</h4>
-          <button class="w-6 h-6 font-extrabold text-white rounded-full toggle-button bg-electric-lime">+</button>
-        </div>
-        <p class="hidden w-full mt-2 text-white break-words">${respuesta}</p>
-      </div>
-    `;
-  }
-
-  // Función para cargar las FAQs desde la API y agregar el HTML
-  async function loadFAQs() {
-    try {
-      const response = await fetch(apiUrl);
-      const faqs = await response.json();
-
-      const faqSection = document.getElementById('faq-section');
-      faqSection.innerHTML = faqs.map(faq => createFAQItem(faq.pregunta, faq.respuesta)).join('');
-
-      // Agregar el evento de clic a los botones una vez cargadas las FAQs
-      document.querySelectorAll('.faq-item').forEach(item => {
-        const button = item.querySelector('.toggle-button');
-        const answer = item.querySelector('p');
-
-        button.addEventListener('click', () => {
-          const isVisible = !answer.classList.contains('hidden');
-          answer.classList.toggle('hidden');
-          button.textContent = isVisible ? '+' : '-';
-        });
-      });
-    } catch (error) {
-      console.error('Error al cargar las FAQs:', error);
-    }
-  }
-
-  // Cargar las FAQs al cargar la página
-  document.addEventListener('DOMContentLoaded', loadFAQs);
-</script>
-
-<script>
-  document.querySelectorAll('.faq-item').forEach(item => {
-    const button = item.querySelector('.toggle-button');
+  const faqItems = document.querySelectorAll<HTMLDivElement>('.faq-item');
+  
+  faqItems.forEach(item => {
+    const button = item.querySelector('div button') as HTMLButtonElement;
     const answer = item.querySelector('p');
+    const [plusIcon, minusIcon] = button.children;
 
     button.addEventListener('click', () => {
-      const isVisible = !answer.classList.contains('hidden');
-      answer.classList.toggle('hidden');
-      button.textContent = isVisible ? '+' : '-';
+      const isExpanded = answer.classList.toggle('max-h-0');
+      answer.classList.toggle('max-h-40', !isExpanded);
+      plusIcon.classList.toggle('hidden', !isExpanded);
+      minusIcon.classList.toggle('hidden', isExpanded);
     });
   });
 </script>
