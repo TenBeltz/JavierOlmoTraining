@@ -1,11 +1,16 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import Layout from '../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+import logo from '/public/favicon.svg';
 ---
 
 <Layout description="Javier Olmo" title="Javier Olmo">
   <main class="flex items-center justify-center min-h-screen px-4">
 		<div class="w-full max-w-xl px-10 py-8 bg-white border rounded-lg shadow sm:py-12 sm:px-16">
-			<div class="text-center mb-7">
+			<div class="text-center flex flex-col items-center mb-7">
+				<div class="max-w-80">
+					<Image src={logo} alt="Logo" class="w-full h-full object-cover" />
+				</div>
 				<h2 class="mb-2 text-3xl font-bold">Inicia Sesión</h2>				
 				<span>Conéctate para acceder a tu cuenta.</span>
 			</div>
