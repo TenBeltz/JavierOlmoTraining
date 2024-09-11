@@ -1,7 +1,109 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { Image } from "astro:assets";
+import logo from '/public/favicon.svg';
+
+const specialties = [
+  { value: "none", label: "Seleccionar especialidad" },
+  { value: "preparador", label: "Preparador físico" },
+  { value: "readaptador", label: "Readaptador" },
+  { value: "fisioterapeuta", label: "Fisioterapeuta" },
+  { value: "medico", label: "Médico" },
+  { value: "otros", label: "Otros" }
+];
 ---
 
+<style>
+  .input {
+    padding-top: 0.375rem;
+    padding-bottom: 0.375rem;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    border-radius: 0.5rem;
+    border-width: 1px;
+    border-color: #D1D5DB;
+    border-style: solid;
+    height: 2.5rem;
+    transition-property: color, background-color, border-color;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
+  }
+  .input:focus {
+    border-color: rgb(204, 255, 0);
+  }
+</style>
+
 <Layout description="Javier Olmo" title="Javier Olmo">
-  <!-- TODO -->
+  <main class="flex items-center justify-center min-h-screen px-4">
+		<div class="w-full max-w-2xl px-10 py-8 bg-white border rounded-lg shadow sm:py-12 sm:px-16">
+      <div class="flex flex-col items-center text-center mb-7">
+				<div class="max-w-80">
+					<Image src={logo} alt="Logo" class="object-cover w-full h-full" />
+          <h2 class="mb-2 text-3xl font-bold">Regístrate</h2>				
+				</div>
+				<span class="text-xl">Benefíciate de nuestra biblioteca</span>
+			</div>
+			<form method="post">
+        <div class="grid lg:grid-cols-2 gap-x-2 gap-y-3">
+          <div class="flex flex-col gap-y-1">
+            <label for="name" class="pl-1 text-sm font-semibold whitespace-nowrap">Nombre</label>
+            <input id="name" type="text" name="name" class="input" autocomplete="on" required>
+          </div>
+          <div class="flex flex-col gap-y-1">
+            <label for="lastname" class="pl-1 text-sm font-semibold whitespace-nowrap">Apellidos</label>
+            <input id="lastname" type="text" name="lastname" class="input" autocomplete="on" required>
+          </div>
+          <div class="flex flex-col gap-y-1">
+            <label for="email" class="pl-1 text-sm font-semibold whitespace-nowrap">Email</label>
+            <input id="email" type="email" name="email" class="input" autocomplete="on" required>
+          </div>
+          <div class="flex flex-col gap-y-1">
+            <label for="birthday" class="pl-1 text-sm font-semibold whitespace-nowrap">Fecha de nacimiento</label>
+            <input id="birthday" type="date" name="birthday" class="input" autocomplete="on" required>
+          </div>
+          <div class="flex flex-col gap-y-1">
+            <label for="country" class="pl-1 text-sm font-semibold whitespace-nowrap">País</label>
+            <input id="country" type="text" name="country" class="input" autocomplete="on" required>
+          </div>
+          <div class="flex flex-col gap-y-1">
+            <label for="city" class="pl-1 text-sm font-semibold whitespace-nowrap">Ciudad</label>
+            <input id="city" type="text" name="city" class="input" autocomplete="on" required>
+          </div>
+          <div class="flex flex-col gap-y-1 lg:col-span-2">
+            <label for="especialty" class="pl-1 text-sm font-semibold whitespace-nowrap">Especialidad</label>
+            <select id="especialty" name="especialty" class="input" autocomplete="on" required>
+              {specialties.map(specialty => (
+                <option value={specialty.value}>{specialty.label}</option>
+              ))}
+            </select>
+          </div>
+          <div class="flex flex-col gap-y-2">
+            <label for="password" class="text-sm font-semibold whitespace-nowrap">Contraseña</label>
+            <input id="password" type="password" name="password" class="input" autocomplete="on" required>
+          </div>
+          <div class="flex flex-col gap-y-2">
+            <label for="confirm-password" class="text-sm font-semibold whitespace-nowrap">Repetir contraseña</label>
+            <input id="confirm-password" type="password" name="confirm-password" class="input" autocomplete="on" required>
+          </div>
+        </div>
+        <div class="flex flex-col mt-4 gap-y-3">
+          <div class="flex items-center gap-x-2">
+            <input id="receive-information" type="checkbox" name="accept-receive-information" class="self-start rounded">
+            <label for="receive-information" class="text-sm leading-none">Deseo recibir informacion sobre productos y servicios de Padel</label>
+          </div>
+          <div class="flex items-center gap-x-2">
+            <input id="receive-information" type="checkbox" name="accept-privacy-politics" class="self-start rounded">
+            <label for="receive-information" class="text-sm leading-none">* Acepto la <a href="" class="text-blue-500 hover:underline">Política de Privacidad</a> y las <a href="" class="text-blue-500 hover:underline">Condiciones Generales de Contratacion</a></label>
+          </div>
+        </div>
+        <div class="mt-6">
+          <p class="text-lg text-center">Está prohibido reproducir y/o utilizar sin consentimiento el material de <a href="https://www.javierolmotraining.es/">javierolmotraining.es</a></p>
+        </div>
+        <div class="flex flex-col items-center justify-center mt-2 gap-y-2">
+          <button type="submit" class="px-8 py-1 font-medium rounded-full bg-electric-lime">Regístrame</button>
+          <a href="/signin/">¿Ya tienes una cuenta?</a>
+        </div>
+      </form>
+    </div>
+  </main>
 </Layout>
