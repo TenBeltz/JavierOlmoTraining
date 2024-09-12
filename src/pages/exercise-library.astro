@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
+import Exercises from '../components/Exercises.astro';
 ---
 
 <Layout 
@@ -17,6 +18,10 @@ import Header from '../components/Header.astro';
       <strong class="text-electric-lime">readaptación de lesiones</strong>
     </Hero>
     <Header/>
+    <section class="mx-auto max-w-7xl">
+      <h2 class="py-6 text-3xl font-bold text-center text-white">Biblioteca de ejercicios</h2>
+      <Exercises />
+    </section>
 	</main>
   <Footer />
 </Layout>

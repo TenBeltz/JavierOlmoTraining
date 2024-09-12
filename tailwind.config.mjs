@@ -26,7 +26,10 @@ export default {
         '100': '25rem',
         '128': '32rem',
         '192': '48rem'
-      }
+      },
+      screens: {
+				'xs': '425px'
+			},
 		},
 	},
 	plugins: [

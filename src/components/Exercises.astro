@@ -1,0 +1,79 @@
+---
+interface Exercise {
+  id: number;
+  titulo: string;
+  video?: string;
+  video_url?: string;
+  fecha: string;
+  creador: number;
+  subida?: number;
+  categorias: number[];
+  usuarios_fav?: number[];
+}
+
+const csrftoken = 'a1405a278e3f6671a2a07f4538e2a50921ddba59';
+
+let data: Exercise[] = [];
+let filteredData: Exercise[] = [];
+let loading = true;
+let error = '';
+
+try {
+  const response: Response = await fetch('https://api.javierolmotraining.es/ejercicios/', {
+    method: 'GET',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': `Token ${csrftoken}`
+    }
+  });
+
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+
+  data = await response.json();
+  filteredData = data;
+} catch (err) {
+  console.log(err);
+  error = 'Failed to fetch data';
+} finally {
+  loading = false;
+}
+---
+
+<form class="mx-4 mb-8" method="get">
+  <label class="relative flex items-center max-w-md mx-auto">
+    <input
+      type="search"
+      name="search-exercise"
+      id="search-exercise"
+      placeholder="Buscar ejercicio"
+      class="w-full rounded-full bg-black border-[1.5px] grow text-white border-white focus:border-white placeholder:text-gray-300"
+    />
+    <button class="absolute text-white right-3" type="submit">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+      </svg>
+    </button>
+  </label>
+</form>
+
+{loading ? (
+  <div class="py-4 text-center">Loading...</div>
+) : error ? (
+  <div class="py-4 text-center text-red-600">{error}</div>
+) : (
+  <div class="grid gap-4 mx-4 text-black xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+    {filteredData.map(item => (
+      <div class="flex flex-col justify-between p-4 bg-white rounded-3xl aspect-square">
+        <div>
+          
+        </div>
+        <div>
+          <h4 class="text-center">{item.titulo}</h4>
+        </div>
+      </div>
+    ))}
+  </div>
+)}
