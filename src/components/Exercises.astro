@@ -18,28 +18,32 @@ let filteredData: Exercise[] = [];
 let loading = true;
 let error = '';
 
-try {
-  const response: Response = await fetch('https://api.javierolmotraining.es/ejercicios/', {
-    method: 'GET',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'Authorization': `Token ${csrftoken}`
+async function fetchData() {
+  try {
+    const response: Response = await fetch('https://api.javierolmotraining.es/ejercicios/', {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${csrftoken}`
+      }
+    });
+  
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
     }
-  });
-
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
+  
+    data = await response.json();
+    filteredData = data;
+  } catch (err) {
+    console.log(err);
+    error = 'Failed to fetch data';
+  } finally {
+    loading = false;
   }
-
-  data = await response.json();
-  filteredData = data;
-} catch (err) {
-  console.log(err);
-  error = 'Failed to fetch data';
-} finally {
-  loading = false;
 }
+
+await fetchData();
 ---
 
 <form class="mx-4 mb-8" method="get">
@@ -77,3 +81,4 @@ try {
     ))}
   </div>
 )}
+
