@@ -80,27 +80,23 @@ async function fetchCategories(): Promise<void> {
 
 function filterExercises(searchValue?: string, selectedCategory?: number, selectedSubcategory?: number): void {
   filteredExercises = exercises;
-  console.log('Ejercicios antes del filtrado:', filteredExercises);
 
   if (searchValue) {
     filteredExercises = filteredExercises.filter(item =>
       item.titulo.toLowerCase().includes(searchValue.toLowerCase())
     );
-    console.log('Ejercicios tras búsqueda:', filteredExercises);
   }
 
   if (selectedCategory) {
     filteredExercises = filteredExercises.filter(item =>
       item.categorias.includes(selectedCategory)
     );
-    console.log('Ejercicios tras categoría:', filteredExercises);
   }
 
   if (selectedSubcategory) {
     filteredExercises = filteredExercises.filter(item =>
       item.categorias.includes(selectedSubcategory)
     );
-    console.log('Ejercicios tras subcategoría:', filteredExercises);
   }
 }
 
@@ -140,6 +136,7 @@ await handleRequest();
 
   <div class="flex flex-wrap gap-1">
     <button type="submit" class="px-4 py-2 bg-black border rounded-md text-electric-lime hover:text-lime-zest hover:border-lime-zest border-electric-lime">Filtrar</button>
+    <button id="clear-filters" type="reset" class="px-4 py-2 bg-black border rounded-md text-electric-lime hover:text-lime-zest hover:border-lime-zest border-electric-lime">Quitar filtros</button>
     
     {categories.filter(parentcategory => !parentcategory.categoria_padre)
       .map(category => 
@@ -185,3 +182,13 @@ await handleRequest();
     ))}
   </div>
 )}
+
+<script>
+  document.getElementById('clear-filters')?.addEventListener('click', () => {
+    const url = new URL(window.location.href);
+    url.search = '';
+    window.history.replaceState({}, '', url.toString());
+
+    window.location.reload();
+  });
+</script>
