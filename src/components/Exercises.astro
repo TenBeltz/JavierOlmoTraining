@@ -16,6 +16,7 @@ interface Category {
   titulo: string;
   aprobada?: boolean;
   categoria_padre?: number;
+  categorias_hijas?: number[];
   subida_por?: number;
 }
 
@@ -119,11 +120,29 @@ await handleRequest();
 </form>
 
 <form method="get" class="flex flex-wrap gap-2 mx-4 mb-8 text-black">
-  {categories.map(category => (
-    <span class="px-4 py-2 rounded-md bg-electric-lime hover:cursor-pointer hover:bg-lime-zest">
-      {category.titulo}
-    </span>
-  ))}
+  {categories.filter(parentcategory => !parentcategory.categoria_padre)
+    .map(category => 
+      <select id={`categories-${category.id}`} class="px-4 py-2 rounded-md categories bg-electric-lime hover:cursor-pointer hover:bg-lime-zest" name={category.id.toString()}>
+        <option value={category.id}>{category.titulo}</option>
+        {category.categorias_hijas?.map(subcategoryId => {
+          const subcategory = categories.find(cat => cat.id === subcategoryId);
+          return subcategory ? <option value={subcategory.id}>{subcategory.titulo}</option> : null;
+        })}
+      </select>
+    )
+  }
+
+  {categories.filter(subcategory => subcategory.categoria_padre && subcategory.categorias_hijas.length !== 0)
+    .map(subcategory => 
+      <select id={`subcategories-${subcategory.id}`} class="px-4 py-2 rounded-md subcategories bg-electric-lime hover:cursor-pointer hover:bg-lime-zest" name={subcategory.id.toString()}>
+        <option value={subcategory.id}>{subcategory.titulo}</option>
+        {subcategory.categorias_hijas?.map(subsubcategoryId => {
+          const subsubcategory = categories.find(cat => cat.id === subsubcategoryId);
+          return subsubcategory ? <option value={subsubcategory.id}>{subsubcategory.titulo}</option> : null;
+        })}
+      </select>
+    )
+  }
 </form>
 
 {loading ? (
