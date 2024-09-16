@@ -28,53 +28,40 @@ let categories: Category[] = [];
 let loading = true;
 let error: string | null = null;
 
-async function fetchExercises(): Promise<void> {
+async function fetchData(): Promise<void> {
   try {
-    const response = await fetch('https://api.javierolmotraining.es/ejercicios/', {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': `Token ${csrftoken}`,
-      },
-    });
+    const [exercisesResponse, categoriesResponse] = await Promise.all([
+      fetch('https://api.javierolmotraining.es/ejercicios/', {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': `Token ${csrftoken}`,
+        },
+      }),
+      fetch('https://api.javierolmotraining.es/categorias/', {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': `Token ${csrftoken}`,
+        },
+      }),
+    ]);
 
-    if (!response.ok) {
-      const errorMessage = `Failed to fetch exercise: ${response.statusText}`;
-      throw new Error(errorMessage);
+    if (!exercisesResponse.ok || !categoriesResponse.ok) {
+      throw new Error('Failed to fetch data');
     }
 
-    const result: Exercise[] = await response.json();
-    exercises = result;
+    [exercises, categories] = await Promise.all([
+      exercisesResponse.json(),
+      categoriesResponse.json(),
+    ]);
   } catch (err) {
     console.error('Fetch error:', err);
     error = err instanceof Error ? err.message : 'Failed to fetch data';
   } finally {
     loading = false;
-  }
-}
-
-async function fetchCategories(): Promise<void> {
-  try {
-    const response = await fetch('https://api.javierolmotraining.es/categorias/', {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': `Token ${csrftoken}`,
-      },
-    });
-
-    if (!response.ok) {
-      const errorMessage = `Failed to fetch data: ${response.statusText}`;
-      throw new Error(errorMessage);
-    }
-
-    const result: Category[] = await response.json();
-    categories = result;
-  } catch (err) {
-    console.error('Fetch error:', err);
-    error = err instanceof Error ? err.message : 'Failed to fetch data';
   }
 }
 
@@ -101,11 +88,11 @@ function filterExercises(searchValue?: string, selectedCategory?: number, select
 }
 
 async function handleRequest(): Promise<void> {
-  await fetchExercises();
-  await fetchCategories();
+  await fetchData();
 
   const { request } = Astro;
   const url = new URL(request.url);
+  
   const searchValue = url.searchParams.get('search-exercise');
   const selectedCategory = url.searchParams.get('categories') ? Number(url.searchParams.get('categories')) : undefined;
   const selectedSubcategory = url.searchParams.get('subcategories') ? Number(url.searchParams.get('subcategories')) : undefined;
@@ -141,7 +128,7 @@ await handleRequest();
     {categories.filter(parentcategory => !parentcategory.categoria_padre)
       .map(category => 
         <select id={`categories-${category.id}`} class="px-4 py-2 rounded-md categories bg-electric-lime hover:cursor-pointer hover:bg-lime-zest" name="categories">
-          <option value={category.id}>{category.titulo}</option>
+          <option value="">{category.titulo}</option>
           {category.categorias_hijas?.map(subcategoryId => {
             const subcategory = categories.find(cat => cat.id === subcategoryId);
             return subcategory ? <option value={subcategory.id}>{subcategory.titulo}</option> : null;
@@ -153,14 +140,14 @@ await handleRequest();
     {categories.filter(subcategory => subcategory.categoria_padre && subcategory.categorias_hijas.length !== 0)
       .map(subcategory => 
         <select id={`subcategories-${subcategory.id}`} class="px-4 py-2 rounded-md subcategories bg-electric-lime hover:cursor-pointer hover:bg-lime-zest" name="subcategories">
-          <option value={subcategory.id}>{subcategory.titulo}</option>
+          <option value="">{subcategory.titulo}</option>
           {subcategory.categorias_hijas?.map(subsubcategoryId => {
             const subsubcategory = categories.find(cat => cat.id === subsubcategoryId);
             return subsubcategory ? <option value={subsubcategory.id}>{subsubcategory.titulo}</option> : null;
           })}
         </select>
       )
-    }  
+    }
   </div>
 </form>
 
@@ -175,8 +162,8 @@ await handleRequest();
         <div>
           
         </div>
-        <div>
-          <h4 class="text-center">{exercise.titulo}</h4>
+        <div class="flex justify-center">
+          <span>{exercise.titulo}</span>
         </div>
       </div>
     ))}
@@ -188,7 +175,6 @@ await handleRequest();
     const url = new URL(window.location.href);
     url.search = '';
     window.history.replaceState({}, '', url.toString());
-
     window.location.reload();
   });
 </script>
