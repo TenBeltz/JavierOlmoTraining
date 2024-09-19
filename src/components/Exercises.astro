@@ -28,6 +28,12 @@ let categories: Category[] = [];
 let loading = true;
 let error: string | null = null;
 
+function extractYouTubeId(url: string): string | null {
+  const regex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
+  const match = url.match(regex);
+  return match ? match[1] : null;
+}
+
 async function fetchData(): Promise<void> {
   try {
     const [exercisesResponse, categoriesResponse] = await Promise.all([
@@ -166,13 +172,23 @@ await handleRequest();
 ) : error ? (
   <div class="py-4 text-center text-red-600">{error}</div>
 ) : (
-  <div class="grid gap-4 mx-4 text-black xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+  <div class="grid gap-4 mx-4 text-black xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
     {filteredExercises.map(exercise => (
-      <div class="flex flex-col justify-between p-4 bg-white rounded-3xl aspect-[2/3]">
+      <div class="flex gap-y-2 flex-col justify-between p-4 bg-white rounded-3xl">
         <div>
-          
+          {exercise.video_url ? (
+            <iframe
+              class="w-full h-full rounded-lg"
+              src={`https://www.youtube.com/embed/${extractYouTubeId(exercise.video_url)}`}
+              loading="lazy"
+              allowfullscreen
+            >
+            </iframe>
+          ) : (
+            <p>No hay video disponible</p>
+          )}
         </div>
-        <div class="flex justify-center">
+        <div class="flex justify-center flex-grow items-center text-center">
           <span>{exercise.titulo}</span>
         </div>
       </div>
