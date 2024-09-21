@@ -101,7 +101,11 @@ import logo from '/public/favicon.svg';
       }
 
       const result: LoginResponse = await response.json();
-      window.location.href = '/exercise-library/';
+      console.log(result);
+
+      document.cookie = `token=${result.token}; path=/; max-age=${7 * 24 * 60 * 60};`;
+      
+      // window.location.href = '/exercise-library/';
 
 		} catch (error) {
       console.error('Error during login:', error);
