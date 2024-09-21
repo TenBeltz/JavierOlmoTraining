@@ -102,6 +102,11 @@ const specialties = [
         <div class="mt-6">
           <p class="text-lg text-center">Está prohibido reproducir y/o utilizar sin consentimiento el material de <a href="https://www.javierolmotraining.es/">javierolmotraining.es</a></p>
         </div>
+        <div class="flex w-full flex-col gap-y-2 sm:w-5/12 mb-4">
+          <label for="captcha" class="text-sm font-semibold">¿Eres un humano?</label>
+          <img src="https://api.javierolmotraining.es/captcha/" alt="Captcha Image" class="w-full">
+          <input type="text" name="captcha" id="captcha" class="h-10 border border-solid border-gray-300 rounded-lg" placeholder="Texto de la imagen" required="" control-id="ControlID-9">
+        </div>
         <div class="flex flex-col items-center justify-center mt-2 gap-y-2">
           <button type="submit" class="px-8 py-1 font-medium rounded-full bg-electric-lime">Regístrame</button>
           <a href="/signin/">¿Ya tienes una cuenta?</a>
@@ -125,7 +130,7 @@ const specialties = [
     acepta_uso_personal: boolean;
     especialidad: string;
     especialidad_otros?: string;
-    recaptcha_token?: string;
+    captcha?: string;
   }
 
   interface SignupResponse {
@@ -151,7 +156,7 @@ const specialties = [
     const acceptPersonalUse = (document.getElementById('accept-personal-use') as HTMLInputElement).checked;
     const especialty = (document.getElementById('especialty') as HTMLSelectElement).value;
     const otherEspecialties = '';
-    const recatpchaToken = '';
+    const captcha = (document.getElementById('captcha') as HTMLInputElement).value;
 
     const formData: SignupFormData = {
       email: email,
@@ -166,7 +171,7 @@ const specialties = [
       acepta_uso_personal: acceptPersonalUse,
       especialidad: especialty,
       especialidad_otros: otherEspecialties,
-      recaptcha_token: recatpchaToken
+      captcha: captcha
     };
 
     console.log(JSON.stringify(formData));
@@ -181,6 +186,7 @@ const specialties = [
       });
 
       if (!response.ok) {
+        console.error('Error during registration:', response);
         throw new Error('Error during registration');
       }
 
