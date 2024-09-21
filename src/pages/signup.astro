@@ -37,7 +37,7 @@ const specialties = [
 </style>
 
 <Layout description="Javier Olmo" title="Javier Olmo">
-  <main class="flex items-center text-black justify-center min-h-screen px-4">
+  <main class="flex items-center justify-center min-h-screen px-4 text-black">
 		<div class="w-full max-w-2xl px-10 py-8 bg-white border rounded-lg shadow sm:py-12 sm:px-16">
       <div class="flex flex-col items-center text-center mb-7">
 				<div class="max-w-80">
@@ -102,12 +102,14 @@ const specialties = [
         <div class="mt-6">
           <p class="text-lg text-center">Está prohibido reproducir y/o utilizar sin consentimiento el material de <a href="https://www.javierolmotraining.es/">javierolmotraining.es</a></p>
         </div>
-        <div class="flex w-full flex-col gap-y-2 sm:w-5/12 mb-4">
+        <div class="flex flex-col items-center w-full mt-4 mb-8 gap-y-2">
           <label for="captcha" class="text-sm font-semibold">¿Eres un humano?</label>
-          <img src="https://api.javierolmotraining.es/captcha/" alt="Captcha Image" class="w-full">
-          <input type="text" name="captcha" id="captcha" class="h-10 border border-solid border-gray-300 rounded-lg" placeholder="Texto de la imagen" required="" control-id="ControlID-9">
+          <div>
+            <img src="https://api.javierolmotraining.es/captcha/" alt="Captcha Image" class="object-cover w-full h-full">
+          </div>
+          <input type="text" name="captcha" id="captcha" class="h-10 border border-gray-300 border-solid rounded-lg" placeholder="Texto de la imagen" required control-id="ControlID-9">
         </div>
-        <div class="flex flex-col items-center justify-center mt-2 gap-y-2">
+        <div class="flex flex-col items-center justify-center gap-y-2">
           <button type="submit" class="px-8 py-1 font-medium rounded-full bg-electric-lime">Regístrame</button>
           <a href="/signin/">¿Ya tienes una cuenta?</a>
         </div>
