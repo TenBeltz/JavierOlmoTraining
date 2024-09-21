@@ -208,8 +208,15 @@ await handleRequest();
     url.search = '';
     window.location.href = url.toString();
   });
-
+  
   document.addEventListener('DOMContentLoaded', () => {
+    const token = document.cookie.split('; ').find(row => row.startsWith('token='));
+    const tokenValue = token ? token.split('=')[1] : null;
+  
+    if (!tokenValue) {
+      window.location.href = '/signin';
+    }
+
     const categories: NodeListOf<HTMLSpanElement> = document.querySelectorAll('[id^="span-category-"], [id^="span-subcategory-"]');
 
     categories.forEach((category: HTMLSpanElement) => {
