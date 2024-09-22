@@ -193,7 +193,7 @@ const specialties = [
       const result: SignupResponse = await response.json();
       document.cookie = `token=${result.token}; path=/; max-age=${7 * 24 * 60 * 60};`;
       
-      window.location.href = '/exercise-library/';
+      window.location.href = '/libreria-de-ejercicios/';
 
     } catch (error) {
       console.error('Error during registration:', error);
