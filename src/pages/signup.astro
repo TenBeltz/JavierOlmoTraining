@@ -95,7 +95,7 @@ const specialties = [
             <label for="accept-personal-use" class="text-sm leading-none">Deseo recibir informacion sobre productos y servicios de Padel</label>
           </div>
           <div class="flex items-center gap-x-2">
-            <input id="accept-politics" type="checkbox" name="acepta_politicas" class="self-start rounded">
+            <input id="accept-politics" type="checkbox" name="acepta_politicas" class="self-start rounded" required>
             <label for="accept-politics" class="text-sm leading-none">* Acepto la <a href="" class="text-blue-500 hover:underline">Política de Privacidad</a> y las <a href="" class="text-blue-500 hover:underline">Condiciones Generales de Contratacion</a></label>
           </div>
         </div>
@@ -129,7 +129,7 @@ const specialties = [
     fecha_nacimiento: string;
     telefono?: string;
     acepta_politicas: boolean;
-    acepta_uso_personal: boolean;
+    acepta_uso_personal?: boolean;
     especialidad: string;
     especialidad_otros?: string;
     captcha?: string;
@@ -176,8 +176,6 @@ const specialties = [
       captcha: captcha
     };
 
-    console.log(JSON.stringify(formData));
-    
     try {
       const response = await fetch('https://api.javierolmotraining.es/register/', {
         method: 'POST',
@@ -193,6 +191,7 @@ const specialties = [
       }
 
       const result: SignupResponse = await response.json();
+      document.cookie = `token=${result.token}; path=/; max-age=${7 * 24 * 60 * 60};`;
       
       window.location.href = '/exercise-library/';
 
