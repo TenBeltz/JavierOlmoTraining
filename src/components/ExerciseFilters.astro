@@ -1,18 +1,35 @@
 ---
 import type { Category } from "./ExerciseLibrary.astro";
+import type { Exercise } from "./ExerciseLibrary.astro";
 
 interface Props {
   categories: Category[];
+  exercises: Exercise[];
 }
 
 const { categories } = Astro.props;
+const { exercises } = Astro.props;
+
+const levels = [...new Set(exercises.map(exercise => exercise.nivel))];
 ---
+
+<style>
+  select { background-image: none; }
+</style>
+
+<label class="relative flex flex-col">
+  <span id="span-level" class="px-4 py-2 rounded-md bg-electric-lime hover:bg-lime-zest hover:cursor-pointer">Nivel</span>
+  <select id="select-level" multiple class="absolute z-10 hidden rounded-md top-11 categories bg-electric-lime hover:cursor-pointer hover:bg-lime-zest" name="levels">
+    <option value="">Nivel</option>
+    {levels.map(level => <option value={level}>{level}</option>)}
+  </select>
+</label>
 
 {categories.filter(parentcategory => !parentcategory.categoria_padre)
   .map(category => 
     <label for={`select-categories-${category.id}`} class="relative flex flex-col">
       <span id={`span-category-${category.titulo}`} class="px-4 py-2 rounded-md bg-electric-lime hover:bg-lime-zest hover:cursor-pointer">{category.titulo}</span>
-      <select id={`select-categories-${category.id}`} multiple class="absolute z-10 hidden rounded-md top-11 categories bg-electric-lime hover:cursor-pointer hover:bg-lime-zest" name="categories">
+      <select form="filter-exercise-form" id={`select-categories-${category.id}`} multiple class="absolute z-10 hidden rounded-md top-11 categories bg-electric-lime hover:cursor-pointer hover:bg-lime-zest" name="categories">
         <option value="">{category.titulo}</option>
         {category.categorias_hijas?.map(subcategoryId => {
           const subcategory = categories.find(cat => cat.id === subcategoryId);
@@ -27,7 +44,7 @@ const { categories } = Astro.props;
   .map(subcategory => 
     <label for={`select-subcategories-${subcategory.id}`} class="relative flex flex-col">
       <span id={`span-subcategory-${subcategory.titulo}`} class="px-4 py-2 rounded-md bg-electric-lime hover:bg-lime-zest hover:cursor-pointer">{subcategory.titulo}</span>
-      <select id={`select-subcategories-${subcategory.id}`} multiple class="absolute z-10 hidden px-4 py-2 rounded-md top-11 subcategories bg-electric-lime hover:cursor-pointer hover:bg-lime-zest" name="subcategories">
+      <select form="filter-exercise-form" id={`select-subcategories-${subcategory.id}`} multiple class="absolute z-10 hidden px-4 py-2 rounded-md top-11 subcategories bg-electric-lime hover:cursor-pointer hover:bg-lime-zest" name="subcategories">
         <option value="">{subcategory.titulo}</option>
         {subcategory.categorias_hijas?.map(subsubcategoryId => {
           const subsubcategory = categories.find(cat => cat.id === subsubcategoryId);
@@ -37,3 +54,63 @@ const { categories } = Astro.props;
     </label>
   )
 }
+
+<script>
+  const categories: NodeListOf<HTMLSpanElement> = document.querySelectorAll('[id^="span-category-"], [id^="span-subcategory-"]');
+  const level = document.getElementById('span-level') as HTMLSpanElement;
+  const selectLevel = document.getElementById('select-level') as HTMLSelectElement;
+
+  function handleDropdownPosition(span: HTMLSpanElement, dropdown: HTMLSelectElement): void {
+    if (dropdown) {
+      const rect = span.getBoundingClientRect();
+      const dropdownRect = dropdown.getBoundingClientRect();
+      const verticalMargin = 108;
+
+      if (rect.left + dropdownRect.width > window.innerWidth) {
+        dropdown.style.left = 'auto';
+        dropdown.style.right = '0';
+      } else {
+        dropdown.style.left = '0';
+        dropdown.style.right = 'auto';
+      }
+
+      if (rect.top + dropdownRect.height > window.innerHeight) {
+        dropdown.style.top = 'auto';
+        dropdown.style.bottom = `${verticalMargin}%`;
+      } else {
+        dropdown.style.top = `${verticalMargin}%`;
+        dropdown.style.bottom = 'auto';
+      }
+    }
+  }
+
+  level.addEventListener('click', () => {
+    categories.forEach((category: HTMLSpanElement) => {
+      const selectCategories = category.nextElementSibling as HTMLSelectElement | null;
+      if (selectCategories) {
+        selectCategories.classList.add('hidden');
+      }
+    });
+
+    selectLevel.classList.toggle('hidden');
+    handleDropdownPosition(level, selectLevel);
+  });
+
+  categories.forEach((category: HTMLSpanElement) => {
+    category.addEventListener('click', () => {
+      selectLevel.classList.add('hidden');
+      
+      const selectCategories = category.nextElementSibling as HTMLSelectElement | null;
+      selectCategories?.classList.toggle('hidden');
+
+      handleDropdownPosition(category, selectCategories);
+      
+      categories.forEach((cat: HTMLSpanElement) => {
+        const selectCategories = cat.nextElementSibling as HTMLSelectElement | null;
+        if (selectCategories && selectCategories !== category.nextElementSibling) {
+          selectCategories.classList.add('hidden');
+        }
+      });
+    });
+  });
+</script>

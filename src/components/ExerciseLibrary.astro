@@ -3,13 +3,14 @@ import SearchExercise from "./SearchExercise.astro";
 import ExerciseFilters from "./ExerciseFilters.astro";
 import AddExercise from "./AddExercise.astro";
 
-interface Exercise {
+export interface Exercise {
   id: number;
   favorito: boolean;
   titulo: string;
   video?: string;
   video_url?: string;
   fecha: string;
+  nivel: string;
   creador: number;
   subida?: number;
   categorias: number[];
@@ -25,8 +26,8 @@ export interface Category {
   subida_por?: number;
 }
 
-let exercises: Exercise[] = [];
-let filteredExercises: Exercise[] = [];
+export let exercises: Exercise[] = [];
+export let filteredExercises: Exercise[] = [];
 let categories: Category[] = [];
 let loading = true;
 let error: string | null = null;
@@ -78,13 +79,17 @@ async function fetchData(): Promise<void> {
   }
 }
 
-function filterExercises(searchValue?: string, selectedCategory?: number, selectedSubcategory?: number): void {
+function filterExercises(searchValue?: string, selectedLevel?: string, selectedCategory?: number, selectedSubcategory?: number): void {
   let filtered = [...exercises];
 
   if (searchValue) {
     filtered = filtered.filter(item =>
       item.titulo.toLowerCase().includes(searchValue.toLowerCase())
     );
+  }
+
+  if (selectedLevel) {
+    filtered = filtered.filter(item => item.nivel.includes(selectedLevel));
   }
 
   if (selectedCategory) {
@@ -105,16 +110,18 @@ async function handleRequest(): Promise<void> {
   const url = new URL(request.url);
   
   const searchValue = url.searchParams.get('search-exercise');
+  const selectedLevel = url.searchParams.get('levels') ? String(url.searchParams.get('levels')) : undefined;
   const selectedCategory = url.searchParams.get('categories') ? Number(url.searchParams.get('categories')) : undefined;
   const selectedSubcategory = url.searchParams.get('subcategories') ? Number(url.searchParams.get('subcategories')) : undefined;
 
-  filterExercises(searchValue, selectedCategory, selectedSubcategory);
+  filterExercises(searchValue, selectedLevel, selectedCategory, selectedSubcategory);
 }
 
 await handleRequest();
 ---
 
 <div class="flex flex-col gap-y-8 mb-8">
+  <form id="filter-exercise-form" method="get"></form>
   <SearchExercise />
   
   <div class="flex mx-4 gap-1 flex-wrap">
@@ -122,12 +129,7 @@ await handleRequest();
     <button form="filter-exercise-form" id="clear-filters" type="reset" class="px-4 py-2 bg-black border rounded-md text-electric-lime hover:text-lime-zest hover:border-lime-zest border-electric-lime">Quitar filtros</button>
 
     <AddExercise />
-
-    <form id="filter-exercise-form" class="flex flex-col flex-wrap text-black" method="get">
-      <div class="flex flex-wrap gap-1">
-        <ExerciseFilters categories={categories} />
-      </div>
-    </form>
+    <ExerciseFilters categories={categories} exercises={exercises} />
   </div>
 </div>
 
@@ -161,7 +163,14 @@ await handleRequest();
         </div>
         <div>
           <div class="flex justify-between">
-            <span>Nivel</span>
+            <span>
+              <span>Nivel:</span>
+              <span>
+                {exercise.nivel === 'A' ? 'Avanzado' : null}
+                {exercise.nivel === 'B' ? 'Intermedio' : null}
+                {exercise.nivel === 'I' ? 'Básico' : null}
+              </span>
+            </span>
             <button class="transition-transform favorite-button hover:scale-105 active:scale-75">
               {exercise.favorito === false ? (
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -186,7 +195,7 @@ await handleRequest();
 <script>
   const exercises = document.querySelectorAll('.exercise');
 
-  function getCookie(name) {
+  function getCookie(name: any) {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
     if (parts.length === 2) return parts.pop().split(';').shift();
@@ -262,43 +271,5 @@ await handleRequest();
     if (!tokenValue) {
       window.location.href = '/signin';
     }
-
-    const categories: NodeListOf<HTMLSpanElement> = document.querySelectorAll('[id^="span-category-"], [id^="span-subcategory-"]');
-
-    categories.forEach((category: HTMLSpanElement) => {
-      category.addEventListener('click', () => {
-        categories.forEach((cat: HTMLSpanElement) => {
-          const selectCategories = cat.nextElementSibling as HTMLSelectElement | null;
-          if (selectCategories && selectCategories !== category.nextElementSibling) {
-            selectCategories.classList.add('hidden');
-          }
-        });
-
-        const selectCategories = category.nextElementSibling as HTMLSelectElement | null;
-        selectCategories?.classList.toggle('hidden');
-
-        if (selectCategories) {
-          const rect = category.getBoundingClientRect();
-          const dropdownRect = selectCategories.getBoundingClientRect();
-          const verticalMargin = 108;
-
-          if (rect.left + dropdownRect.width > window.innerWidth) {
-            selectCategories.style.left = 'auto';
-            selectCategories.style.right = '0';
-          } else {
-            selectCategories.style.left = '0';
-            selectCategories.style.right = 'auto';
-          }
-
-          if (rect.top + dropdownRect.height > window.innerHeight) {
-            selectCategories.style.top = 'auto';
-            selectCategories.style.bottom = `${verticalMargin}%`;
-          } else {
-            selectCategories.style.top = `${verticalMargin}%`;
-            selectCategories.style.bottom = 'auto';
-          }
-        }
-      });
-    });
   });
 </script>
