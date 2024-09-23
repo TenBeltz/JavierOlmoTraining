@@ -1,5 +1,6 @@
 ---
-
+import { exercises } from "./ExerciseLibrary.astro";
+const levels = [...new Set(exercises.map(exercise => exercise.nivel))];
 ---
 
 <form action="post">
@@ -11,10 +12,32 @@
   </button>
 </form>
 
-<dialog id="add-exercise-modal" class="modal">
+<dialog id="add-exercise-modal" class="modal text-white">
   <div class="modal-box rounded-xl">
+    <h3 class="text-center text-3xl mb-6">Nuevo ejercicio</h3>
     <div>
-
+      <form method="post" class="flex flex-col gap-y-4">
+        <label class="flex flex-col gap-y-1">
+          <span class="ml-2">Nombre del ejercicio</span>
+          <input type="text" id="titulo" name="titulo" class="rounded-full text-black">
+        </label>
+        <label class="flex flex-col gap-y-1">
+          <span class="ml-2">URL <span class="text-zinc-500">(TikTok/Instagram/YouTube)</span></span>
+          <input type="text" id="video-url" name="video_url" class="rounded-full text-black">
+        </label>
+        <label class="flex flex-col gap-y-1">
+          <span class="ml-2">URL <span class="text-zinc-500">(TikTok/Instagram/YouTube)</span></span>
+          <select id="level" name="nivel" class="rounded-full text-black">
+            {levels.map(level => (
+              <option value={level}>
+                {level === 'A' ? 'Avanzado' : null}
+                {level === 'B' ? 'Intermedio' : null}
+                {level === 'I' ? 'Básico' : null}
+              </option>
+            ))}
+          </select>
+        </label>
+      </form>
     </div>
     <div class="modal-action">
       <form method="dialog">

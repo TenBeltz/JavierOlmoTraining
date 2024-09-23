@@ -1,14 +1,5 @@
 ---
-import type { Category } from "./ExerciseLibrary.astro";
-import type { Exercise } from "./ExerciseLibrary.astro";
-
-interface Props {
-  categories: Category[];
-  exercises: Exercise[];
-}
-
-const { categories } = Astro.props;
-const { exercises } = Astro.props;
+import { exercises, categories } from "./ExerciseLibrary.astro";
 
 const levels = [...new Set(exercises.map(exercise => exercise.nivel))];
 ---

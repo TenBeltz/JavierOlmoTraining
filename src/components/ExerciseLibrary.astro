@@ -28,7 +28,7 @@ export interface Category {
 
 export let exercises: Exercise[] = [];
 export let filteredExercises: Exercise[] = [];
-let categories: Category[] = [];
+export let categories: Category[] = [];
 let loading = true;
 let error: string | null = null;
 let token: string | undefined;
@@ -129,7 +129,7 @@ await handleRequest();
     <button form="filter-exercise-form" id="clear-filters" type="reset" class="px-4 py-2 bg-black border rounded-md text-electric-lime hover:text-lime-zest hover:border-lime-zest border-electric-lime">Quitar filtros</button>
 
     <AddExercise />
-    <ExerciseFilters categories={categories} exercises={exercises} />
+    <ExerciseFilters categories={categories} />
   </div>
 </div>
 
