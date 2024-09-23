@@ -1,0 +1,36 @@
+---
+
+---
+
+<form action="post">
+  <button
+    id="add-exercise-button"
+    class="px-4 py-2 bg-black border rounded-md text-electric-lime hover:text-lime-zest hover:border-lime-zest border-electric-lime"
+  >
+    Añadir ejercicio
+  </button>
+</form>
+
+<dialog id="add-exercise-modal" class="modal">
+  <div class="modal-box rounded-xl">
+    <div>
+
+    </div>
+    <div class="modal-action">
+      <form method="dialog">
+        <button class="text-black btn bg-electric-lime hover:bg-lime-zest">Cerrar</button>
+      </form>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  const addExerciseButton = document.getElementById('add-exercise-button');
+
+  addExerciseButton.addEventListener('click', event => {
+    event.preventDefault();
+
+    const addExerciseModal = document.getElementById('add-exercise-modal') as HTMLDialogElement;
+    addExerciseModal.showModal();
+  }); 
+</script>

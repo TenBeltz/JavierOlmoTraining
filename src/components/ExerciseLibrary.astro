@@ -1,7 +1,7 @@
 ---
-import FilterExercises from "./FilterExercises.astro";
 import SearchExercise from "./SearchExercise.astro";
-import useState from '@astrojs/react';
+import ExerciseFilters from "./ExerciseFilters.astro";
+import AddExercise from "./AddExercise.astro";
 
 interface Exercise {
   id: number;
@@ -114,10 +114,22 @@ async function handleRequest(): Promise<void> {
 await handleRequest();
 ---
 
-<form class="flex flex-col flex-wrap gap-8 mx-4 mb-8 text-black" method="get">
+<div class="flex flex-col gap-y-8 mb-8">
   <SearchExercise />
-  <FilterExercises categories={categories} />
-</form>
+  
+  <div class="flex mx-4 gap-1 flex-wrap">
+    <button form="filter-exercise-form" type="submit" class="px-4 py-2 bg-black border rounded-md text-electric-lime hover:text-lime-zest hover:border-lime-zest border-electric-lime">Filtrar</button>
+    <button form="filter-exercise-form" id="clear-filters" type="reset" class="px-4 py-2 bg-black border rounded-md text-electric-lime hover:text-lime-zest hover:border-lime-zest border-electric-lime">Quitar filtros</button>
+
+    <AddExercise />
+
+    <form id="filter-exercise-form" class="flex flex-col flex-wrap text-black" method="get">
+      <div class="flex flex-wrap gap-1">
+        <ExerciseFilters categories={categories} />
+      </div>
+    </form>
+  </div>
+</div>
 
 {loading ? (
   <div class="py-4 text-center">Loading...</div>
