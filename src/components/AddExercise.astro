@@ -1,6 +1,40 @@
 ---
-import { exercises } from "./ExerciseLibrary.astro";
+import MultiSelect from "./MultiSelect";
+import { exercises, categories } from "./ExerciseLibrary.astro";
 const levels = [...new Set(exercises.map(exercise => exercise.nivel))];
+
+interface Option {
+  value: number;
+  label: string;
+}
+
+let categoryOptions: Option[] = [];
+let subCategoryOptions: Option[] = [];
+
+categories
+.filter(parentcategory => !parentcategory.categoria_padre)
+.map(category => {
+  category.categorias_hijas?.map(childCategoryId => {
+    const childCategory = categories.find(cat => cat.id === childCategoryId);
+    if (childCategory) {
+      categoryOptions.push({ value: childCategory.id, label: childCategory.titulo });
+    }
+  })
+});
+
+categories
+.filter(subcategory => subcategory.categoria_padre && subcategory.categorias_hijas.length !== 0)
+.map(subcategory => {
+  subcategory.categorias_hijas?.map(childSubCategoryId => {
+    const childSubCategory = categories.find(cat => cat.id === childSubCategoryId);
+    if (childSubCategory) {
+      subCategoryOptions.push({ value: childSubCategory.id, label: childSubCategory.titulo });
+    }
+  })
+});
+
+console.log(categoryOptions);
+console.log(subCategoryOptions);
 ---
 
 <form action="post">
@@ -13,7 +47,7 @@ const levels = [...new Set(exercises.map(exercise => exercise.nivel))];
 </form>
 
 <dialog id="add-exercise-modal" class="modal text-white">
-  <div class="modal-box rounded-xl">
+  <div class="modal-box rounded-xl scrollbar-hidden">
     <h3 class="text-center text-3xl mb-6">Nuevo ejercicio</h3>
     <div>
       <form method="post" class="flex flex-col gap-y-4">
@@ -26,7 +60,7 @@ const levels = [...new Set(exercises.map(exercise => exercise.nivel))];
           <input type="text" id="video-url" name="video_url" class="rounded-full text-black">
         </label>
         <label class="flex flex-col gap-y-1">
-          <span class="ml-2">URL <span class="text-zinc-500">(TikTok/Instagram/YouTube)</span></span>
+          <span class="ml-2">Nivel</span>
           <select id="level" name="nivel" class="rounded-full text-black">
             {levels.map(level => (
               <option value={level}>
@@ -37,6 +71,22 @@ const levels = [...new Set(exercises.map(exercise => exercise.nivel))];
             ))}
           </select>
         </label>
+        {categories.filter(parentcategory => !parentcategory.categoria_padre)
+          .map(category => 
+            <label class="flex flex-col gap-y-1">
+              <span class="ml-2">{category.titulo}</span>
+              <MultiSelect client:load options={categoryOptions} />
+            </label>
+          )
+        }
+        {categories.filter(subcategory => subcategory.categoria_padre && subcategory.categorias_hijas.length !== 0)
+          .map(subcategory => 
+            <label class="flex flex-col gap-y-1">
+              <span class="ml-2">{subcategory.titulo}</span>
+              <MultiSelect client:load options={subCategoryOptions} />
+            </label>
+          )
+        }
       </form>
     </div>
     <div class="modal-action">
