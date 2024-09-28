@@ -11,33 +11,23 @@ interface Option {
 let categoryOptions: Option[] = [];
 let subCategoryOptions: Option[] = [];
 
+// Construyendo opciones de categorías
 categories
-.filter(parentcategory => !parentcategory.categoria_padre)
-.map(category => {
-  category.categorias_hijas?.map(childCategoryId => {
-    const childCategory = categories.find(cat => cat.id === childCategoryId);
-    if (childCategory) {
-      categoryOptions.push({ value: childCategory.id, label: childCategory.titulo });
-    }
-  })
-});
-
-categories
-.filter(subcategory => subcategory.categoria_padre && subcategory.categorias_hijas.length !== 0)
-.map(subcategory => {
-  subcategory.categorias_hijas?.map(childSubCategoryId => {
-    const childSubCategory = categories.find(cat => cat.id === childSubCategoryId);
-    if (childSubCategory) {
-      subCategoryOptions.push({ value: childSubCategory.id, label: childSubCategory.titulo });
-    }
-  })
-});
+  .filter(parentcategory => !parentcategory.categoria_padre)
+  .map(category => {
+    category.categorias_hijas?.map(childCategoryId => {
+      const childCategory = categories.find(cat => cat.id === childCategoryId);
+      if (childCategory) {
+        categoryOptions.push({ value: childCategory.id, label: childCategory.titulo });
+      }
+    });
+  });
 
 console.log(categoryOptions);
 console.log(subCategoryOptions);
 ---
 
-<form action="post">
+<form id="add-exercise-form" method="post" class="flex flex-col gap-y-4">
   <button
     id="add-exercise-button"
     class="px-4 py-2 bg-black border rounded-md text-electric-lime hover:text-lime-zest hover:border-lime-zest border-electric-lime"
@@ -49,46 +39,80 @@ console.log(subCategoryOptions);
 <dialog id="add-exercise-modal" class="modal text-white">
   <div class="modal-box rounded-xl scrollbar-hidden">
     <h3 class="text-center text-3xl mb-6">Nuevo ejercicio</h3>
-    <div>
-      <form method="post" class="flex flex-col gap-y-4">
+    <form id="exercise-form" class="flex flex-col gap-y-4">
+      <!-- Sección Detalles -->
+      <fieldset class="border border-electric-lime p-4 rounded-md">
+        <legend class="text-lg font-bold">Detalles</legend>
         <label class="flex flex-col gap-y-1">
           <span class="ml-2">Nombre del ejercicio</span>
-          <input type="text" id="titulo" name="titulo" class="rounded-full text-black">
+          <input type="text" id="titulo" name="titulo" class="rounded-full text-black" required>
+        </label>
+        <label class="flex flex-col gap-y-1">
+          <span class="ml-2">Descripción</span>
+          <textarea id="descripcion" name="descripcion" class="rounded-md text-black"></textarea>
         </label>
         <label class="flex flex-col gap-y-1">
           <span class="ml-2">URL <span class="text-zinc-500">(TikTok/Instagram/YouTube)</span></span>
-          <input type="text" id="video-url" name="video_url" class="rounded-full text-black">
+          <input type="url" id="video-url" name="video_url" class="rounded-full text-black" required>
         </label>
         <label class="flex flex-col gap-y-1">
           <span class="ml-2">Nivel</span>
           <select id="level" name="nivel" class="rounded-full text-black">
             {levels.map(level => (
               <option value={level}>
-                {level === 'A' ? 'Avanzado' : null}
-                {level === 'B' ? 'Intermedio' : null}
-                {level === 'I' ? 'Básico' : null}
+                {level === 'A' ? 'Avanzado' : level === 'B' ? 'Intermedio' : 'Básico'}
               </option>
             ))}
           </select>
         </label>
+      </fieldset>
+
+      <!-- Sección Categorías -->
+      <fieldset class="border border-electric-lime p-4 rounded-md">
+        <legend class="text-lg font-bold">Categorías</legend>
         {categories.filter(parentcategory => !parentcategory.categoria_padre)
-          .map(category => 
-            <label class="flex flex-col gap-y-1">
-              <span class="ml-2">{category.titulo}</span>
-              <MultiSelect client:load options={categoryOptions} />
+          .map(category => (
+            <label for={`select-categories-${category.id}`} class="relative flex flex-col">
+              <span id={`span-category-${category.titulo}`} class="px-4 py-2 rounded-md bg-electric-lime hover:bg-lime-zest hover:cursor-pointer text-black">{category.titulo}</span>
+              <select form="add-exercise-form" id={`select-categories-${category.id}`} class="rounded-md bg-electric-lime text-black" name="categories" multiple>
+                <option value="" disabled>Seleccionar subcategorías</option>
+                {category.categorias_hijas?.map(subcategoryId => {
+                  const subcategory = categories.find(cat => cat.id === subcategoryId);
+                  return subcategory ? <option value={subcategory.id}>{subcategory.titulo}</option> : null;
+                })}
+              </select>
             </label>
-          )
-        }
-        {categories.filter(subcategory => subcategory.categoria_padre && subcategory.categorias_hijas.length !== 0)
-          .map(subcategory => 
-            <label class="flex flex-col gap-y-1">
-              <span class="ml-2">{subcategory.titulo}</span>
-              <MultiSelect client:load options={subCategoryOptions} />
-            </label>
-          )
-        }
-      </form>
-    </div>
+          ))}
+      </fieldset>
+
+      <!-- Sección Nuevas Categorías -->
+      <fieldset class="border border-electric-lime p-4 rounded-md">
+        <legend class="text-lg font-bold">Nuevas Categorías</legend>
+        <label class="flex flex-col gap-y-1">
+          <span class="ml-2">Título de la nueva categoría</span>
+          <input type="text" id="new-category-title" class="rounded-full text-black">
+        </label>
+        <label class="flex flex-col gap-y-1">
+          <span class="ml-2">Categoría padre</span>
+          <select id="new-category-parent-id" class="rounded-full text-black">
+            <option value="" disabled selected>Seleccionar categoría padre</option>
+            {categories.filter(parentcategory => !parentcategory.categoria_padre).map(parent => (
+              <option value={parent.id}>{parent.titulo}</option>
+            ))}
+          </select>
+        </label>
+        <button type="button" id="add-new-category" class="btn bg-electric-lime text-black hover:bg-lime-zest">
+          Agregar Nueva Categoría
+        </button>
+        <div id="new-categories-list" class="mt-2">
+          <!-- Aquí se mostrarán las nuevas categorías añadidas -->
+        </div>
+      </fieldset>
+
+      <button type="submit" class="btn bg-electric-lime text-black hover:bg-lime-zest">
+        Subir ejercicio
+      </button>
+    </form>
     <div class="modal-action">
       <form method="dialog">
         <button class="text-black btn bg-electric-lime hover:bg-lime-zest">Cerrar</button>
@@ -99,11 +123,93 @@ console.log(subCategoryOptions);
 
 <script>
   const addExerciseButton = document.getElementById('add-exercise-button');
+  const exerciseForm = document.getElementById('exercise-form');
+  const addNewCategoryButton = document.getElementById('add-new-category');
+  const newCategoriesList = document.getElementById('new-categories-list');
+
+  let newCategories = []; // Array para almacenar las nuevas categorías
 
   addExerciseButton.addEventListener('click', event => {
     event.preventDefault();
+    const addExerciseModal = document.getElementById('add-exercise-modal');
+    (addExerciseModal as HTMLDialogElement).showModal();
+  });
 
-    const addExerciseModal = document.getElementById('add-exercise-modal') as HTMLDialogElement;
-    addExerciseModal.showModal();
-  }); 
+  addNewCategoryButton.addEventListener('click', () => {
+    const newCategoryTitle = (document.getElementById('new-category-title') as HTMLInputElement).value;
+    const newCategoryParentId = (document.getElementById('new-category-parent-id') as HTMLSelectElement).value;
+
+    if (newCategoryTitle && newCategoryParentId) {
+      const newCategory = {
+        title: newCategoryTitle,
+        parentId: newCategoryParentId,
+      };
+
+      newCategories.push(newCategory); // Agregar nueva categoría al array
+      updateNewCategoriesList(); // Actualizar la lista de nuevas categorías
+
+      // Limpiar campos
+      (document.getElementById('new-category-title') as HTMLInputElement).value = '';
+      (document.getElementById('new-category-parent-id') as HTMLSelectElement).value = '';
+    }
+  });
+
+  function updateNewCategoriesList() {
+    newCategoriesList.innerHTML = ''; // Limpiar la lista actual
+    newCategories.forEach((category, index) => {
+      const categoryItem = document.createElement('div');
+      categoryItem.className = 'flex justify-between items-center p-2 bg-zinc-800 rounded-md mt-2';
+      categoryItem.innerHTML = `
+        <span>${category.title}</span>
+        <button type="button" class="remove-category-btn text-red-500 ml-4" data-index="${index}">Eliminar</button>
+      `;
+      newCategoriesList.appendChild(categoryItem);
+    });
+
+    // Agregar evento de eliminación a los botones de eliminar
+    const removeButtons = document.querySelectorAll('.remove-category-btn');
+    removeButtons.forEach(button => {
+      button.addEventListener('click', (event) => {
+        const index = (event.target as HTMLElement).getAttribute('data-index');
+        newCategories.splice(Number(index), 1); // Eliminar la categoría del array
+        updateNewCategoriesList(); // Actualizar la lista
+      });
+    });
+  }
+
+  exerciseForm.addEventListener('submit', async event => {
+    event.preventDefault();
+
+    const formData = new FormData(exerciseForm as HTMLFormElement);
+    const data = {
+      titulo: formData.get('titulo'),
+      descripcion: formData.get('descripcion'),
+      video_url: formData.get('video_url'),
+      nivel: formData.get('nivel'),
+      categorias: Array.from(document.querySelectorAll('[id^="select-categories-"]'))
+        .flatMap(select => Array.from((select as HTMLSelectElement).selectedOptions))
+        .map(option => option.value),
+      nuevas_categorias: newCategories.map(cat => ({
+        titulo: cat.title,
+        categoria_padre_id: parseInt(cat.parentId),
+      })),
+    };
+
+    const response = await fetch('https://api.javierolmotraining.es/ejercicio/', {
+      method: 'POST',
+      headers: {
+        'accept': 'application/json',
+        'Authorization': 'Token 971c6ade3b9dcf24d55c37d7de724cbae047458c',
+        'Content-Type': 'application/json',
+        'X-CSRFTOKEN': 'sTtGLyaCj1ihZ22CO7XWHR8k5La2hp2n9Tt2NOVTv8gk5WT6yFVIOwaY1tO9oHSN',
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (response.ok) {
+      console.log("Ejercicio añadido exitosamente");
+    } else {
+      console.error("Error al añadir el ejercicio");
+    }
+  });
 </script>
