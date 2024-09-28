@@ -1,31 +1,17 @@
 ---
-import MultiSelect from "./MultiSelect";
 import { exercises, categories } from "./ExerciseLibrary.astro";
-const levels = [...new Set(exercises.map(exercise => exercise.nivel))];
 
 interface Option {
   value: number;
   label: string;
 }
 
-let categoryOptions: Option[] = [];
-let subCategoryOptions: Option[] = [];
-
-// Construyendo opciones de categorías
-categories
-  .filter(parentcategory => !parentcategory.categoria_padre)
-  .map(category => {
-    category.categorias_hijas?.map(childCategoryId => {
-      const childCategory = categories.find(cat => cat.id === childCategoryId);
-      if (childCategory) {
-        categoryOptions.push({ value: childCategory.id, label: childCategory.titulo });
-      }
-    });
-  });
-
-console.log(categoryOptions);
-console.log(subCategoryOptions);
+const levels = [...new Set(exercises.map(exercise => exercise.nivel))];
 ---
+
+<style>
+  select[multiple] { background-image: none; }
+</style>
 
 <form id="add-exercise-form" method="post" class="flex flex-col gap-y-4">
   <button
@@ -36,28 +22,27 @@ console.log(subCategoryOptions);
   </button>
 </form>
 
-<dialog id="add-exercise-modal" class="modal text-white">
+<dialog id="add-exercise-modal" class="text-white modal">
   <div class="modal-box rounded-xl scrollbar-hidden">
-    <h3 class="text-center text-3xl mb-6">Nuevo ejercicio</h3>
+    <h3 class="mb-6 text-3xl text-center">Nuevo ejercicio</h3>
     <form id="exercise-form" class="flex flex-col gap-y-4">
-      <!-- Sección Detalles -->
-      <fieldset class="border border-electric-lime p-4 rounded-md">
+      <fieldset class="flex flex-col p-4 border rounded-2xl border-electric-lime gap-y-3">
         <legend class="text-lg font-bold">Detalles</legend>
         <label class="flex flex-col gap-y-1">
           <span class="ml-2">Nombre del ejercicio</span>
-          <input type="text" id="titulo" name="titulo" class="rounded-full text-black" required>
+          <input type="text" id="titulo" name="titulo" class="text-black rounded-full" required>
         </label>
         <label class="flex flex-col gap-y-1">
           <span class="ml-2">Descripción</span>
-          <textarea id="descripcion" name="descripcion" class="rounded-md text-black"></textarea>
+          <textarea id="descripcion" name="descripcion" class="text-black resize-none rounded-2xl"></textarea>
         </label>
         <label class="flex flex-col gap-y-1">
           <span class="ml-2">URL <span class="text-zinc-500">(TikTok/Instagram/YouTube)</span></span>
-          <input type="url" id="video-url" name="video_url" class="rounded-full text-black" required>
+          <input type="url" id="video-url" name="video_url" class="text-black rounded-full" required>
         </label>
         <label class="flex flex-col gap-y-1">
           <span class="ml-2">Nivel</span>
-          <select id="level" name="nivel" class="rounded-full text-black">
+          <select id="level" name="nivel" class="text-black rounded-full">
             {levels.map(level => (
               <option value={level}>
                 {level === 'A' ? 'Avanzado' : level === 'B' ? 'Intermedio' : 'Básico'}
@@ -67,14 +52,13 @@ console.log(subCategoryOptions);
         </label>
       </fieldset>
 
-      <!-- Sección Categorías -->
-      <fieldset class="border border-electric-lime p-4 rounded-md">
+      <fieldset class="flex flex-col p-4 border rounded-2xl gap-y-3 border-electric-lime">
         <legend class="text-lg font-bold">Categorías</legend>
         {categories.filter(parentcategory => !parentcategory.categoria_padre)
           .map(category => (
             <label for={`select-categories-${category.id}`} class="relative flex flex-col">
-              <span id={`span-category-${category.titulo}`} class="px-4 py-2 rounded-md bg-electric-lime hover:bg-lime-zest hover:cursor-pointer text-black">{category.titulo}</span>
-              <select form="add-exercise-form" id={`select-categories-${category.id}`} class="rounded-md bg-electric-lime text-black" name="categories" multiple>
+              <span id={`span-category-${category.titulo}`} class="px-4 py-2 text-black bg-white rounded-full hover:cursor-pointer">{category.titulo}</span>
+              <select form="add-exercise-form" id={`select-categories-${category.id}`} class="hidden mt-1 text-black rounded-2xl" name="categories" multiple>
                 <option value="" disabled>Seleccionar subcategorías</option>
                 {category.categorias_hijas?.map(subcategoryId => {
                   const subcategory = categories.find(cat => cat.id === subcategoryId);
@@ -85,31 +69,28 @@ console.log(subCategoryOptions);
           ))}
       </fieldset>
 
-      <!-- Sección Nuevas Categorías -->
-      <fieldset class="border border-electric-lime p-4 rounded-md">
+      <fieldset class="flex flex-col p-4 border rounded-2xl gap-y-3 border-electric-lime">
         <legend class="text-lg font-bold">Nuevas Categorías</legend>
         <label class="flex flex-col gap-y-1">
           <span class="ml-2">Título de la nueva categoría</span>
-          <input type="text" id="new-category-title" class="rounded-full text-black">
+          <input type="text" id="new-category-title" class="text-black rounded-full">
         </label>
         <label class="flex flex-col gap-y-1">
           <span class="ml-2">Categoría padre</span>
-          <select id="new-category-parent-id" class="rounded-full text-black">
+          <select id="new-category-parent-id" class="text-black rounded-full">
             <option value="" disabled selected>Seleccionar categoría padre</option>
             {categories.filter(parentcategory => !parentcategory.categoria_padre).map(parent => (
               <option value={parent.id}>{parent.titulo}</option>
             ))}
           </select>
         </label>
-        <button type="button" id="add-new-category" class="btn bg-electric-lime text-black hover:bg-lime-zest">
+        <button type="button" id="add-new-category" class="py-2 text-black transition-colors rounded-full bg-electric-lime hover:bg-lime-zest">
           Agregar Nueva Categoría
         </button>
-        <div id="new-categories-list" class="mt-2">
-          <!-- Aquí se mostrarán las nuevas categorías añadidas -->
-        </div>
+        <div id="new-categories-list" class="mt-2"></div>
       </fieldset>
 
-      <button type="submit" class="btn bg-electric-lime text-black hover:bg-lime-zest">
+      <button type="submit" class="text-black rounded-full btn bg-electric-lime hover:bg-lime-zest">
         Subir ejercicio
       </button>
     </form>
@@ -127,12 +108,12 @@ console.log(subCategoryOptions);
   const addNewCategoryButton = document.getElementById('add-new-category');
   const newCategoriesList = document.getElementById('new-categories-list');
 
-  let newCategories = []; // Array para almacenar las nuevas categorías
+  let newCategories = [];
 
   addExerciseButton.addEventListener('click', event => {
     event.preventDefault();
-    const addExerciseModal = document.getElementById('add-exercise-modal');
-    (addExerciseModal as HTMLDialogElement).showModal();
+    const addExerciseModal = document.getElementById('add-exercise-modal') as HTMLDialogElement;
+    addExerciseModal.showModal();
   });
 
   addNewCategoryButton.addEventListener('click', () => {
@@ -145,34 +126,32 @@ console.log(subCategoryOptions);
         parentId: newCategoryParentId,
       };
 
-      newCategories.push(newCategory); // Agregar nueva categoría al array
-      updateNewCategoriesList(); // Actualizar la lista de nuevas categorías
+      newCategories.push(newCategory);
+      updateNewCategoriesList();
 
-      // Limpiar campos
       (document.getElementById('new-category-title') as HTMLInputElement).value = '';
       (document.getElementById('new-category-parent-id') as HTMLSelectElement).value = '';
     }
   });
 
   function updateNewCategoriesList() {
-    newCategoriesList.innerHTML = ''; // Limpiar la lista actual
+    newCategoriesList.innerHTML = '';
     newCategories.forEach((category, index) => {
       const categoryItem = document.createElement('div');
       categoryItem.className = 'flex justify-between items-center p-2 bg-zinc-800 rounded-md mt-2';
       categoryItem.innerHTML = `
         <span>${category.title}</span>
-        <button type="button" class="remove-category-btn text-red-500 ml-4" data-index="${index}">Eliminar</button>
+        <button type="button" class="ml-4 text-red-500 remove-category-btn" data-index="${index}">Eliminar</button>
       `;
       newCategoriesList.appendChild(categoryItem);
     });
 
-    // Agregar evento de eliminación a los botones de eliminar
     const removeButtons = document.querySelectorAll('.remove-category-btn');
     removeButtons.forEach(button => {
       button.addEventListener('click', (event) => {
         const index = (event.target as HTMLElement).getAttribute('data-index');
-        newCategories.splice(Number(index), 1); // Eliminar la categoría del array
-        updateNewCategoriesList(); // Actualizar la lista
+        newCategories.splice(Number(index), 1);
+        updateNewCategoriesList();
       });
     });
   }
