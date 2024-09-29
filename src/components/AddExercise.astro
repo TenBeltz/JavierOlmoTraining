@@ -38,7 +38,7 @@ const levels = [...new Set(exercises.map(exercise => exercise.nivel))];
         </label>
         <label class="flex flex-col gap-y-1">
           <span class="ml-2">URL <span class="text-zinc-500">(TikTok/Instagram/YouTube)</span></span>
-          <input type="url" id="video-url" name="video_url" class="text-black rounded-full" required>
+          <input type="url" id="video-url" name="video_url" class="text-black rounded-full">
         </label>
         <label class="flex flex-col gap-y-1">
           <span class="ml-2">Nivel</span>
@@ -53,12 +53,28 @@ const levels = [...new Set(exercises.map(exercise => exercise.nivel))];
       </fieldset>
 
       <fieldset class="flex flex-col p-4 border rounded-2xl gap-y-3 border-electric-lime">
+        <legend class="text-lg font-bold">Video</legend>
+        <div class="flex items-center justify-center w-full">
+          <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+            <div class="flex flex-col items-center justify-center pt-5 pb-6">
+              <svg class="w-8 h-8 mb-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+              </svg>
+              <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+              <p class="text-xs text-gray-500">MP4 (MAX. 10MB)</p>
+            </div>
+            <input id="dropzone-file" name="video" type="file" class="hidden" accept="video/mp4" />
+          </label>
+        </div> 
+      </fieldset>
+
+      <fieldset class="flex flex-col p-4 border rounded-2xl gap-y-3 border-electric-lime">
         <legend class="text-lg font-bold">Categorías</legend>
         {categories.filter(parentcategory => !parentcategory.categoria_padre)
           .map(category => (
             <label for={`select-categories-${category.id}`} class="relative flex flex-col">
               <span id={`span-category-${category.titulo}`} class="px-4 py-2 text-black bg-white rounded-full hover:cursor-pointer">{category.titulo}</span>
-              <select form="add-exercise-form" id={`select-categories-${category.id}`} class="hidden mt-1 text-black rounded-2xl" name="categories" multiple>
+              <select form="add-exercise-form" id={`select-categories-${category.id}`} class="hidden mt-1 text-black rounded-2xl" name="categories" multiple required>
                 <option value="" disabled>Seleccionar subcategorías</option>
                 {category.categorias_hijas?.map(subcategoryId => {
                   const subcategory = categories.find(cat => cat.id === subcategoryId);
@@ -163,6 +179,7 @@ const levels = [...new Set(exercises.map(exercise => exercise.nivel))];
     const data = {
       titulo: formData.get('titulo'),
       descripcion: formData.get('descripcion'),
+      video: formData.get('video'),
       video_url: formData.get('video_url'),
       nivel: formData.get('nivel'),
       categorias: Array.from(document.querySelectorAll('[id^="select-categories-"]'))
@@ -185,6 +202,9 @@ const levels = [...new Set(exercises.map(exercise => exercise.nivel))];
       body: JSON.stringify(data),
     });
 
+    console.log(response.json());
+    console.log(response);
+    
     if (response.ok) {
       console.log("Ejercicio añadido exitosamente");
     } else {
