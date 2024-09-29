@@ -2,6 +2,8 @@
 import SearchExercise from "./SearchExercise.astro";
 import ExerciseFilters from "./ExerciseFilters.astro";
 import AddExercise from "./AddExercise.astro";
+import outlineStar from "../assets/outline-star.svg?raw"
+import solidStar from "../assets/solid-star.svg?raw"
 
 export interface Exercise {
   id: number;
@@ -163,12 +165,30 @@ await handleRequest();
         </div>
         <div>
           <div class="flex justify-between">
-            <span>
+            <span class="flex items-center gap-x-1">
               <span>Nivel:</span>
-              <span>
-                {exercise.nivel === 'A' ? 'Avanzado' : null}
-                {exercise.nivel === 'B' ? 'Intermedio' : null}
-                {exercise.nivel === 'I' ? 'Básico' : null}
+              <span class="flex">
+                {
+                  exercise.nivel === 'A' ? 
+                    <Fragment set:html={solidStar} />
+                    <Fragment set:html={solidStar} />
+                    <Fragment set:html={solidStar} />
+                  : null
+                }
+                {
+                  exercise.nivel === 'B' ? 
+                  <Fragment set:html={solidStar} />
+                  <Fragment set:html={solidStar} />
+                  <Fragment set:html={outlineStar} />
+                  : null
+                }
+                {
+                  exercise.nivel === 'I' ? 
+                    <Fragment set:html={solidStar} />
+                    <Fragment set:html={outlineStar} />
+                    <Fragment set:html={outlineStar} />
+                  : null
+                }
               </span>
             </span>
             <button class="transition-transform favorite-button hover:scale-105 active:scale-75">
