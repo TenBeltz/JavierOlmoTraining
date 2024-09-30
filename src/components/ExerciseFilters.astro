@@ -11,8 +11,11 @@ const levels = [...new Set(exercises.map(exercise => exercise.nivel))];
 <label class="relative flex flex-col">
   <span id="span-level" class="px-4 py-2 rounded-md bg-electric-lime hover:bg-lime-zest hover:cursor-pointer">Nivel</span>
   <select id="select-level" multiple class="absolute z-10 hidden rounded-md top-11 categories bg-electric-lime hover:cursor-pointer hover:bg-lime-zest" name="levels">
-    <option value="">Nivel</option>
-    {levels.map(level => <option value={level}>{level}</option>)}
+    {levels.map(level => (
+      <option value={level}>
+        {level === 'A' ? 'Avanzado' : level === 'B' ? 'Intermedio' : 'Básico'}
+      </option>
+    ))}
   </select>
 </label>
 
