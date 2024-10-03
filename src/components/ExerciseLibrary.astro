@@ -121,6 +121,17 @@ async function handleRequest(): Promise<void> {
 
 await handleRequest();
 
+function isIframe(videoUrl: string): boolean {
+  if (videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be')) {
+    return true;
+  } else if (videoUrl.includes('tiktok.com')) {
+    return true;
+  } else if ((videoUrl.includes('instagram.com'))) {
+    return true;
+  }
+  return false;
+}
+
 function renderVideo(videoUrl: string): string {
   if (videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be')) {
     const youtubeId = videoUrl.split('v=')[1]?.split('&')[0] || videoUrl.split('/').pop();
@@ -136,11 +147,11 @@ function renderVideo(videoUrl: string): string {
 }
 ---
 
-<div class="flex flex-col gap-y-8 mb-8">
+<div class="flex flex-col mb-8 gap-y-8">
   <form id="filter-exercise-form" method="get"></form>
   <SearchExercise />
   
-  <div class="flex mx-4 gap-1 flex-wrap">
+  <div class="flex flex-wrap gap-1 mx-4">
     <button form="filter-exercise-form" type="submit" class="px-4 py-2 bg-black border rounded-md text-electric-lime hover:text-lime-zest hover:border-lime-zest border-electric-lime">Filtrar</button>
     <button form="filter-exercise-form" id="clear-filters" type="reset" class="px-4 py-2 bg-black border rounded-md text-electric-lime hover:text-lime-zest hover:border-lime-zest border-electric-lime">Quitar filtros</button>
 
@@ -159,7 +170,11 @@ function renderVideo(videoUrl: string): string {
       <div id={exercise.id.toString()} data-is-favorite={`${exercise.favorito.valueOf()}`} class="flex flex-col justify-between p-4 bg-white hover:cursor-pointer exercise gap-y-2 rounded-3xl">
         <div>
           {exercise.video_url ? (
-            <iframe src={renderVideo(exercise.video_url)} class="rounded-lg w-full"></iframe>
+            isIframe(exercise.video_url) ? (
+              <iframe src={renderVideo(exercise.video_url)} class="rounded-lg w-full aspect-[9/6]"></iframe> 
+            ) : (
+              <video src={exercise.video_url} controls class="aspect-[9/6] rounded-lg w-full"></video>
+            )
           ) : (
             <p>No hay video disponible</p>
           )}

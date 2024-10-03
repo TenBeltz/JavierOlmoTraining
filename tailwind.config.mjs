@@ -28,7 +28,7 @@ export default {
         '192': '48rem'
       },
       screens: {
-				'xs': '425px'
+				'xs': '512px'
 			},
 		},
 	},
