@@ -171,9 +171,35 @@ function renderVideo(videoUrl: string): string {
         <div>
           {exercise.video_url ? (
             isIframe(exercise.video_url) ? (
-              <iframe src={renderVideo(exercise.video_url)} class="rounded-lg w-full aspect-[9/6]"></iframe> 
+              <iframe src={renderVideo(exercise.video_url)} class="rounded-lg w-full aspect-[9/6]"></iframe>
+              <dialog class="modal">
+                <div class="modal-box rounded-xl">
+                  <h3 class="mb-6 text-lg font-bold text-center text-white">{exercise.titulo}</h3>
+                  <div>
+                    <iframe src={renderVideo(exercise.video_url)} class="rounded-lg w-full aspect-[9/6]"></iframe>
+                  </div>
+                  <div class="modal-action">
+                    <form method="dialog">
+                      <button class="text-black btn bg-electric-lime hover:bg-lime-zest">Cerrar</button>
+                    </form>
+                  </div>
+                </div>
+              </dialog>
             ) : (
               <video src={exercise.video_url} controls class="aspect-[9/6] rounded-lg w-full"></video>
+              <dialog class="modal">
+                <div class="modal-box rounded-xl">
+                  <h3 class="mb-6 text-lg font-bold text-center text-white">{exercise.titulo}</h3>
+                  <div>
+                    <video src={exercise.video_url} controls class="w-full rounded-lg aspect-[9/6]"></video>
+                  </div>
+                  <div class="modal-action">
+                    <form method="dialog">
+                      <button class="text-black btn bg-electric-lime hover:bg-lime-zest">Cerrar</button>
+                    </form>
+                  </div>
+                </div>
+              </dialog>
             )
           ) : (
             <p>No hay video disponible</p>
