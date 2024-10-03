@@ -120,6 +120,20 @@ async function handleRequest(): Promise<void> {
 }
 
 await handleRequest();
+
+function renderVideo(videoUrl: string): string {
+  if (videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be')) {
+    const youtubeId = videoUrl.split('v=')[1]?.split('&')[0] || videoUrl.split('/').pop();
+    return `https://www.youtube.com/embed/${youtubeId}`;
+  } else if (videoUrl.includes('tiktok.com')) {
+    const tiktokId = videoUrl.split('/').pop();
+    return `https://www.tiktok.com/embed/${tiktokId}`;
+  } else if (videoUrl.includes('instagram.com')) {
+    const instagramId = videoUrl.split('/p/')[1]?.split('/')[0];
+    return `https://www.instagram.com/p/${instagramId}/embed`;
+  }
+  return videoUrl;
+}
 ---
 
 <div class="flex flex-col gap-y-8 mb-8">
@@ -145,20 +159,7 @@ await handleRequest();
       <div id={exercise.id.toString()} data-is-favorite={`${exercise.favorito.valueOf()}`} class="flex flex-col justify-between p-4 bg-white hover:cursor-pointer exercise gap-y-2 rounded-3xl">
         <div>
           {exercise.video_url ? (
-            <video src='../../public/videos/example-tmp.mp4' class="rounded-lg"></video>
-            <dialog class="modal">
-              <div class="modal-box rounded-xl">
-                <h3 class="mb-6 text-lg font-bold text-center text-white">{exercise.titulo}</h3>
-                <div>
-                  <video src='../../public/videos/example-tmp.mp4' controls class="w-full rounded-lg"></video>
-                </div>
-                <div class="modal-action">
-                  <form method="dialog">
-                    <button class="text-black btn bg-electric-lime hover:bg-lime-zest">Cerrar</button>
-                  </form>
-                </div>
-              </div>
-            </dialog>
+            <iframe src={renderVideo(exercise.video_url)} class="rounded-lg w-full"></iframe>
           ) : (
             <p>No hay video disponible</p>
           )}
