@@ -43,7 +43,8 @@ if (Astro.cookies.has("token")) {
 async function fetchData(): Promise<void> {
   try {
     if (!token) {
-      throw new Error('Token is not available');
+      // Redirect user to /signin if there's no token
+      window.location.href = '/signin';
     }
     
     const [exercisesResponse, categoriesResponse] = await Promise.all([
