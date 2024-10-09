@@ -73,6 +73,8 @@ async function fetchData(): Promise<void> {
       exercisesResponse.json(),
       categoriesResponse.json(),
     ]);
+    console.log(exercises);
+    console.log("***********************")
   } catch (err) {
     console.error('Fetch error:', err);
     error = err instanceof Error ? err.message : 'Failed to fetch data';
