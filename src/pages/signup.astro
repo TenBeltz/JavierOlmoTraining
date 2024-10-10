@@ -12,27 +12,33 @@ const specialties = [
   { value: "otros", label: "Otros" }
 ];
 ---
-
 <style>
   input, select {
 		background-color: #ffffff;
 	}
   .input {
-    padding-top: 0.375rem;
-    padding-bottom: 0.375rem;
-    padding-left: 0.75rem;
-    padding-right: 0.75rem;
+    padding: 0.375rem 0.75rem;
     border-radius: 0.5rem;
-    border-width: 1px;
-    border-color: #D1D5DB;
-    border-style: solid;
+    border: 1px solid #D1D5DB;
     height: 2.5rem;
-    transition-property: color, background-color, border-color;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 300ms;
+    transition: border-color 300ms;
   }
   .input:focus {
     border-color: rgb(204, 255, 0);
+  }
+  .notification {
+    display: none;
+    margin-top: 1rem;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+  }
+  .success {
+    background-color: #d4edda;
+    color: #155724;
+  }
+  .error {
+    background-color: #f8d7da;
+    color: #721c24;
   }
 </style>
 
@@ -49,39 +55,39 @@ const specialties = [
 			<form id="signup-form" method="post">
         <div class="grid lg:grid-cols-2 gap-x-2 gap-y-3">
           <div class="flex flex-col gap-y-1">
-            <label for="name" class="pl-1 text-sm font-semibold whitespace-nowrap">Nombre</label>
+            <label for="name" class="pl-1 text-sm font-semibold">Nombre</label>
             <input id="name" type="text" name="nombre" class="input" autocomplete="on" required>
           </div>
           <div class="flex flex-col gap-y-1">
-            <label for="lastname" class="pl-1 text-sm font-semibold whitespace-nowrap">Apellidos</label>
+            <label for="lastname" class="pl-1 text-sm font-semibold">Apellidos</label>
             <input id="lastname" type="text" name="apellidos" class="input" autocomplete="on" required>
           </div>
           <div class="flex flex-col gap-y-1">
-            <label for="email" class="pl-1 text-sm font-semibold whitespace-nowrap">Email</label>
+            <label for="email" class="pl-1 text-sm font-semibold">Email</label>
             <input id="email" type="email" name="email" class="input" autocomplete="on" required>
           </div>
           <div class="flex flex-col gap-y-1">
-            <label for="birthday" class="pl-1 text-sm font-semibold whitespace-nowrap">Fecha de nacimiento</label>
+            <label for="birthday" class="pl-1 text-sm font-semibold">Fecha de nacimiento</label>
             <input id="birthday" type="date" name="fecha_nacimiento" class="input" autocomplete="on" required>
           </div>
           <div class="flex flex-col gap-y-1">
-            <label for="phone" class="pl-1 text-sm font-semibold whitespace-nowrap">Telefono</label>
+            <label for="phone" class="pl-1 text-sm font-semibold">Teléfono</label>
             <input id="phone" type="text" name="telefono" class="input" autocomplete="on" required>
           </div>
           <div class="flex flex-col gap-y-1">
-            <label for="country" class="pl-1 text-sm font-semibold whitespace-nowrap">País</label>
+            <label for="country" class="pl-1 text-sm font-semibold">País</label>
             <input id="country" type="text" name="pais" class="input" autocomplete="on" required>
           </div>
           <div class="flex flex-col gap-y-1">
-            <label for="city" class="pl-1 text-sm font-semibold whitespace-nowrap">Ciudad</label>
+            <label for="city" class="pl-1 text-sm font-semibold">Ciudad</label>
             <input id="city" type="text" name="ciudad" class="input" autocomplete="on" required>
           </div>
           <div class="flex flex-col gap-y-2">
-            <label for="password" class="text-sm font-semibold whitespace-nowrap">Contraseña</label>
+            <label for="password" class="text-sm font-semibold">Contraseña</label>
             <input id="password" type="password" name="password" class="input" autocomplete="on" required>
           </div>
           <div class="flex flex-col gap-y-1 lg:col-span-2">
-            <label for="especialty" class="pl-1 text-sm font-semibold whitespace-nowrap">Especialidad</label>
+            <label for="especialty" class="pl-1 text-sm font-semibold">Especialidad</label>
             <select id="especialty" name="especialidad" class="input" autocomplete="on" required>
               {specialties.map(specialty => (
                 <option value={specialty.value}>{specialty.label}</option>
@@ -92,11 +98,11 @@ const specialties = [
         <div class="flex flex-col mt-4 gap-y-3">
           <div class="flex items-center gap-x-2">
             <input id="accept-personal-use" type="checkbox" name="acepta_uso_personal" class="self-start rounded">
-            <label for="accept-personal-use" class="text-sm leading-none">Deseo recibir informacion sobre productos y servicios de Padel</label>
+            <label for="accept-personal-use" class="text-sm leading-none">Deseo recibir información sobre productos y servicios de Padel</label>
           </div>
           <div class="flex items-center gap-x-2">
             <input id="accept-politics" type="checkbox" name="acepta_politicas" class="self-start rounded" required>
-            <label for="accept-politics" class="text-sm leading-none">* Acepto la <a href="" class="text-blue-500 hover:underline">Política de Privacidad</a> y las <a href="" class="text-blue-500 hover:underline">Condiciones Generales de Contratacion</a></label>
+            <label for="accept-politics" class="text-sm leading-none">* Acepto la <a href="" class="text-blue-500 hover:underline">Política de Privacidad</a> y las <a href="" class="text-blue-500 hover:underline">Condiciones Generales de Contratación</a></label>
           </div>
         </div>
         <div class="mt-6">
@@ -107,46 +113,23 @@ const specialties = [
           <div>
             <img src="https://api.javierolmotraining.es/captcha/" alt="Captcha Image" class="object-cover w-full h-full">
           </div>
-          <input type="text" name="captcha" id="captcha" class="h-10 border border-gray-300 border-solid rounded-lg" placeholder="Texto de la imagen" required control-id="ControlID-9">
+          <input type="text" name="captcha" id="captcha" class="h-10 border border-gray-300 border-solid rounded-lg" placeholder="Texto de la imagen" required>
         </div>
         <div class="flex flex-col items-center justify-center gap-y-2">
           <button type="submit" class="px-8 py-1 font-medium rounded-full bg-electric-lime">Regístrame</button>
           <a href="/signin/">¿Ya tienes una cuenta?</a>
         </div>
       </form>
+      <div id="notification" class="notification"></div>
     </div>
   </main>
 </Layout>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 <script>
-  interface SignupFormData {
-    email: string;
-    password: string;
-    nombre: string;
-    apellidos: string;
-    pais: string;
-    ciudad: string;
-    fecha_nacimiento: string;
-    telefono?: string;
-    acepta_politicas: boolean;
-    acepta_uso_personal?: boolean;
-    especialidad: string;
-    especialidad_otros?: string;
-    captcha?: string;
-  }
+  const form = document.getElementById('signup-form');
+  const notification = document.getElementById('notification');
 
-  interface SignupResponse {
-    token?: string;
-    user_id?: number;
-    email?: string;
-    error?: string;  // Se agregó para capturar posibles errores
-  }
-
-  const form = document.getElementById('signup-form') as HTMLFormElement;
-
-  form.addEventListener('submit', async (event: SubmitEvent) => {
+  form.addEventListener('submit', async (event) => {
     event.preventDefault();
 
     const name = (document.getElementById('name') as HTMLInputElement).value;
@@ -160,12 +143,11 @@ const specialties = [
     const acceptPolitics = (document.getElementById('accept-politics') as HTMLInputElement).checked;
     const acceptPersonalUse = (document.getElementById('accept-personal-use') as HTMLInputElement).checked;
     const especialty = (document.getElementById('especialty') as HTMLSelectElement).value;
-    const otherEspecialties = '';
     const captcha = (document.getElementById('captcha') as HTMLInputElement).value;
 
-    const formData: SignupFormData = {
-      email: email,
-      password: password,
+    const formData = {
+      email,
+      password,
       nombre: name,
       apellidos: lastname,
       pais: country,
@@ -175,8 +157,7 @@ const specialties = [
       acepta_politicas: acceptPolitics,
       acepta_uso_personal: acceptPersonalUse,
       especialidad: especialty,
-      especialidad_otros: otherEspecialties,
-      captcha: captcha
+      captcha
     };
 
     try {
@@ -187,45 +168,29 @@ const specialties = [
         },
         body: JSON.stringify(formData)
       });
-      console.log("KEEEEE");
-      console.log(response.ok);
-      const result: SignupResponse = await response.json();  // Extrae el JSON de la respuesta
+
+      const result = await response.json();
 
       if (!response.ok) {
-
-        // Si hay un error en el cuerpo de la respuesta
         const errorMessage = result.error || 'Ocurrió un problema durante el registro';
-
-        // Notificación de error con SweetAlert
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: errorMessage,  // Muestra el mensaje de error de la API
-        });
-
-        throw new Error('Error during registration');
+        notification.textContent = errorMessage;
+        notification.className = 'notification error';
+        notification.style.display = 'block';
+        return;
       }
 
-      // Notificación de éxito con SweetAlert
-      Swal.fire({
-        icon: 'success',
-        title: '¡Registro exitoso!',
-        text: 'Te has registrado con éxito.',
-        showConfirmButton: false,
-        timer: 1500,
-      }).then(() => {
+      notification.textContent = '¡Registro exitoso! Te has registrado con éxito.';
+      notification.className = 'notification success';
+      notification.style.display = 'block';
+
+      setTimeout(() => {
         window.location.href = '/libreria-de-ejercicios/';
-      });
+      }, 1500);
 
     } catch (error) {
-      console.error('Error during registration:', error);
-
-      // Notificación de error genérico
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Ocurrió un problema durante el registro.',
-      });
+      notification.textContent = 'Ocurrió un problema durante el registro.';
+      notification.className = 'notification error';
+      notification.style.display = 'block';
     }
   });
 </script>

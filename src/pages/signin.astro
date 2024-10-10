@@ -25,6 +25,20 @@ import logo from '/public/favicon.svg';
   .input:focus {
     border-color: rgb(204, 255, 0);
   }
+  .notification {
+    display: none;
+    margin-top: 1rem;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+  }
+  .success {
+    background-color: #d4edda;
+    color: #155724;
+  }
+  .error {
+    background-color: #f8d7da;
+    color: #721c24;
+  }
 </style>
 
 <Layout description="Javier Olmo" title="Javier Olmo">
@@ -50,6 +64,7 @@ import logo from '/public/favicon.svg';
 					Iniciar Sesión
 				</button>
 			</form>
+			<div id="notification" class="notification"></div> <!-- Notificación de error -->
 			<div class="flex flex-col mt-10 text-center">
 				<div class="flex flex-col gap-y-2">
 					<span>¿No tienes cuenta?</span>
@@ -75,6 +90,7 @@ import logo from '/public/favicon.svg';
 	}
 
   const form = document.getElementById('login-form') as HTMLFormElement;
+  const notification = document.getElementById('notification') as HTMLElement;
 
   form.addEventListener('submit', async (event: SubmitEvent) => {
     event.preventDefault();
@@ -96,18 +112,33 @@ import logo from '/public/favicon.svg';
         body: JSON.stringify(formData),
       });
 
+      const result = await response.json();
+
       if (!response.ok) {
-        console.error('Error during login:', response);
-        throw new Error('Login failed');
+        const errorMessage = result.detail || 'Ocurrió un problema durante el inicio de sesión';
+        notification.textContent = errorMessage;
+        notification.className = 'notification error';
+        notification.style.display = 'block';
+        return;
       }
 
-      const result: LoginResponse = await response.json();
       document.cookie = `token=${result.token}; path=/; max-age=${7 * 24 * 60 * 60};`;
 
       window.location.href = '/libreria-de-ejercicios/';
 
 		} catch (error) {
-      console.error('Error during login:', error);
+      console.log(error);
+      console.log("*****")
+      if (error.detail)
+    {
+      
+      notification.textContent = error.detail;
+    }else{
+      notification.textContent = 'Ocurrió un problema durante el inicio de sesión.';
+    }
+
+      notification.className = 'notification error';
+      notification.style.display = 'block';
     }
   });
 </script>
