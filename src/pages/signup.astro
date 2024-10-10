@@ -118,6 +118,8 @@ const specialties = [
   </main>
 </Layout>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
   interface SignupFormData {
     email: string;
@@ -136,10 +138,11 @@ const specialties = [
   }
 
   interface SignupResponse {
-		token: string;
-		user_id: number;
-		email: string;
-	}
+    token?: string;
+    user_id?: number;
+    email?: string;
+    error?: string;  // Se agregó para capturar posibles errores
+  }
 
   const form = document.getElementById('signup-form') as HTMLFormElement;
 
@@ -184,19 +187,45 @@ const specialties = [
         },
         body: JSON.stringify(formData)
       });
+      console.log("KEEEEE");
+      console.log(response.ok);
+      const result: SignupResponse = await response.json();  // Extrae el JSON de la respuesta
 
       if (!response.ok) {
-        console.error('Error during registration:', response);
+
+        // Si hay un error en el cuerpo de la respuesta
+        const errorMessage = result.error || 'Ocurrió un problema durante el registro';
+
+        // Notificación de error con SweetAlert
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: errorMessage,  // Muestra el mensaje de error de la API
+        });
+
         throw new Error('Error during registration');
       }
 
-      const result: SignupResponse = await response.json();
-      document.cookie = `token=${result.token}; path=/; max-age=${7 * 24 * 60 * 60};`;
-      
-      window.location.href = '/libreria-de-ejercicios/';
+      // Notificación de éxito con SweetAlert
+      Swal.fire({
+        icon: 'success',
+        title: '¡Registro exitoso!',
+        text: 'Te has registrado con éxito.',
+        showConfirmButton: false,
+        timer: 1500,
+      }).then(() => {
+        window.location.href = '/libreria-de-ejercicios/';
+      });
 
     } catch (error) {
       console.error('Error during registration:', error);
+
+      // Notificación de error genérico
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Ocurrió un problema durante el registro.',
+      });
     }
   });
 </script>
