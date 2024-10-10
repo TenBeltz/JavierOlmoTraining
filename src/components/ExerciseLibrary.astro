@@ -162,7 +162,12 @@ function renderVideo(videoUrl: string): string {
     <ExerciseFilters categories={categories} />
   </div>
 </div>
-
+{error === "Token is not available" ? (
+  <script>
+    window.location.href = '/signin';
+  </script>
+  )
+: null}
 {loading ? (
   <div class="py-4 text-center">Loading...</div>
 ) : error ? (
@@ -174,7 +179,7 @@ function renderVideo(videoUrl: string): string {
         <div>
           {exercise.video_url ? (
             isIframe(exercise.video_url) ? (
-              <iframe src={renderVideo(exercise.video_url)} class="rounded-lg w-full aspect-[9/6]"></iframe>
+              <iframe loading="lazy" src={renderVideo(exercise.video_url)} class="rounded-lg w-full aspect-[9/6]"></iframe>
               <dialog class="modal">
                 <div class="modal-box rounded-xl">
                   <h3 class="mb-6 text-lg font-bold text-center text-white">{exercise.titulo}</h3>
@@ -189,12 +194,12 @@ function renderVideo(videoUrl: string): string {
                 </div>
               </dialog>
             ) : (
-              <video src={exercise.video_url} controls class="aspect-[9/6] rounded-lg w-full"></video>
+              <video preload="none" src={exercise.video_url} controls class="aspect-[9/6] rounded-lg w-full"></video>
               <dialog class="modal">
                 <div class="modal-box rounded-xl">
                   <h3 class="mb-6 text-lg font-bold text-center text-white">{exercise.titulo}</h3>
                   <div>
-                    <video src={exercise.video_url} controls class="w-full rounded-lg aspect-[9/6]"></video>
+                    <video preload="none" src={exercise.video_url} controls class="w-full rounded-lg aspect-[9/6]"></video>
                   </div>
                   <div class="modal-action">
                     <form method="dialog">
