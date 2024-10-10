@@ -199,14 +199,23 @@ const levels = [...new Set(exercises.map(exercise => exercise.nivel))];
     formData.append(`categorias[${index}]`, category);
   });
 
-  // Verificación en consola para asegurarse de que el archivo se añade correctamente
-  console.log(formData.get('video'));
+  let token: string | undefined;
+
+  if (Astro.cookies.has("token")) {
+  const tokenCookie = Astro.cookies.get("token");
+  token = tokenCookie.value;
+  }
+
+  if (!token) {
+      // Redirect user to /signin if there's no token
+      window.location.href = '/signin';
+    }
 
   const response = await fetch('https://api.javierolmotraining.es/ejercicio/', {
     method: 'POST',
     headers: {
       'accept': 'application/json',
-      'Authorization': 'Token 971c6ade3b9dcf24d55c37d7de724cbae047458c',
+      'Authorization': 'Token ' + token,
       'X-CSRFTOKEN': 'sTtGLyaCj1ihZ22CO7XWHR8k5La2hp2n9Tt2NOVTv8gk5WT6yFVIOwaY1tO9oHSN',
       // NO incluimos Content-Type manualmente
     },
