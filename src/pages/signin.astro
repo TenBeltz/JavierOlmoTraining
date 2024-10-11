@@ -60,11 +60,12 @@ import logo from '/public/favicon.svg';
 					<label for="password" class="pl-1 text-sm font-semibold font whitespace-nowrap">Contraseña</label>
 					<input id="password" type="password" name="password" class="input" autocomplete="on" required>
 				</div>
-				<button type="submit" class="bg-electric-lime min-w-max w-full font-medium rounded-full p-1.5 px-10 mx-auto mb-2 transition-colors hover:bg-lime-zest">
+        <div id="notification" class="notification"></div>
+        <button type="submit" class="bg-electric-lime min-w-max w-full font-medium rounded-full p-1.5 px-10 mx-auto mb-2 transition-colors hover:bg-lime-zest">
 					Iniciar Sesión
 				</button>
 			</form>
-			<div id="notification" class="notification"></div> <!-- Notificación de error -->
+			
 			<div class="flex flex-col mt-10 text-center">
 				<div class="flex flex-col gap-y-2">
 					<span>¿No tienes cuenta?</span>

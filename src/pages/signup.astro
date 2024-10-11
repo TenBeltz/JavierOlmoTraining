@@ -115,12 +115,14 @@ const specialties = [
           </div>
           <input type="text" name="captcha" id="captcha" class="h-10 border border-gray-300 border-solid rounded-lg" placeholder="Texto de la imagen" required>
         </div>
+        
         <div class="flex flex-col items-center justify-center gap-y-2">
+          <div id="notification" class="notification"></div>
           <button type="submit" class="px-8 py-1 font-medium rounded-full bg-electric-lime">Regístrame</button>
           <a href="/signin/">¿Ya tienes una cuenta?</a>
         </div>
       </form>
-      <div id="notification" class="notification"></div>
+
     </div>
   </main>
 </Layout>
@@ -168,7 +170,7 @@ const specialties = [
         },
         body: JSON.stringify(formData)
       });
-
+      console.log(response);
       const result = await response.json();
 
       if (!response.ok) {
