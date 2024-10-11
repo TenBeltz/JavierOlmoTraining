@@ -175,14 +175,7 @@ const levels = [...new Set(exercises.map(exercise => exercise.nivel))];
   exerciseForm.addEventListener('submit', async event => {
   event.preventDefault();
 
-  const formData = new FormData(exerciseForm as HTMLFormElement);
-
-  // Verificar si el archivo de video existe y si no supera los 10MB
-  const videoFile = formData.get('video');
-  if (videoFile && videoFile.size > 10 * 1024 * 1024) { // 10 MB
-    console.error("El archivo de video es demasiado grande.");
-    return;
-  }
+  const formData = new FormData(exerciseForm);
 
   // Añadir nuevas categorías al FormData
   newCategories.forEach((cat, index) => {
@@ -199,36 +192,80 @@ const levels = [...new Set(exercises.map(exercise => exercise.nivel))];
     formData.append(`categorias[${index}]`, category);
   });
 
-  let token: string | undefined;
+  let token;
 
-  if (Astro.cookies.has("token")) {
-  const tokenCookie = Astro.cookies.get("token");
-  token = tokenCookie.value;
-  }
+  // Get token from cookies
+  document.cookie.split(';').forEach(cookie => {
+    const [key, value] = cookie.split('=');
+    if (key.trim() === 'token') {
+      token = value;
+    }
+  });
 
   if (!token) {
-      // Redirect user to /signin if there's no token
-      window.location.href = '/signin';
-    }
+    window.location.href = '/signin';
+  }
 
   const response = await fetch('https://api.javierolmotraining.es/ejercicio/', {
     method: 'POST',
     headers: {
       'accept': 'application/json',
       'Authorization': 'Token ' + token,
-      'X-CSRFTOKEN': 'sTtGLyaCj1ihZ22CO7XWHR8k5La2hp2n9Tt2NOVTv8gk5WT6yFVIOwaY1tO9oHSN',
-      // NO incluimos Content-Type manualmente
     },
-    body: formData, // Enviamos FormData directamente
+    body: formData,
   });
 
-  console.log(await response.json());
+  const responseData = await response.json();
 
   if (response.ok) {
-    console.log("Ejercicio añadido exitosamente");
+    alert("Ejercicio añadido exitosamente");
+
+    // Cerrar el modal
+    const addExerciseModal = document.getElementById('add-exercise-modal') as HTMLDialogElement;
+    addExerciseModal.close();
   } else {
-    console.error("Error al añadir el ejercicio");
+    handleErrors(responseData);
   }
 });
+
+// Función para manejar y mostrar errores
+function handleErrors(errors) {
+  const errorElements = {
+    titulo: document.getElementById('titulo'),
+    descripcion: document.getElementById('descripcion'),
+    nivel: document.getElementById('level'),
+    video_url: document.getElementById('video-url'),
+  };
+
+  // Limpiar errores previos
+  Object.values(errorElements).forEach(input => {
+    input.classList.remove('border-red-500');
+    const errorMessage = input.nextElementSibling;
+    if (errorMessage && errorMessage.classList.contains('error-message')) {
+      errorMessage.remove();
+    }
+  });
+
+  // Mostrar errores
+  Object.keys(errors).forEach(field => {
+    if (errorElements[field]) {
+      const inputElement = errorElements[field];
+      inputElement.classList.add('border-red-500');
+      
+      // Crear un mensaje de error debajo del campo
+      const errorText = document.createElement('span');
+      errorText.className = 'text-red-500 text-sm error-message';
+      errorText.innerText = errors[field][0];
+      inputElement.insertAdjacentElement('afterend', errorText);
+    }
+  });
+
+  if (errors.non_field_errors) {
+    // Mostrar errores generales del formulario
+    alert(errors.non_field_errors.join(', '));
+  }
+}
+
+
 
 </script>

@@ -116,7 +116,7 @@ import logo from '/public/favicon.svg';
       const result = await response.json();
 
       if (!response.ok) {
-        const errorMessage = result.detail || 'Ocurrió un problema durante el inicio de sesión';
+        const errorMessage = result.error || 'Ocurrió un problema durante el inicio de sesión';
         notification.textContent = errorMessage;
         notification.className = 'notification error';
         notification.style.display = 'block';
