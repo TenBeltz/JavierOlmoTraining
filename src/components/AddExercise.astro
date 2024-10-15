@@ -1,11 +1,6 @@
 ---
 import { exercises, categories } from "./ExerciseLibrary.astro";
 
-interface Option {
-  value: number;
-  label: string;
-}
-
 const levels = [...new Set(exercises.map(exercise => exercise.nivel))];
 ---
 
@@ -120,7 +115,7 @@ const levels = [...new Set(exercises.map(exercise => exercise.nivel))];
 
 <script>
   const addExerciseButton = document.getElementById('add-exercise-button');
-  const exerciseForm = document.getElementById('exercise-form');
+  const exerciseForm = document.getElementById('exercise-form') as HTMLFormElement;
   const addNewCategoryButton = document.getElementById('add-new-category');
   const newCategoriesList = document.getElementById('new-categories-list');
 
@@ -192,7 +187,7 @@ const levels = [...new Set(exercises.map(exercise => exercise.nivel))];
     formData.append(`categorias[${index}]`, category);
   });
 
-  let token;
+  let token: any;
 
   // Get token from cookies
   document.cookie.split(';').forEach(cookie => {
@@ -265,7 +260,4 @@ function handleErrors(errors) {
     alert(errors.non_field_errors.join(', '));
   }
 }
-
-
-
 </script>
