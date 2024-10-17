@@ -84,13 +84,11 @@ async function fetchData(): Promise<void> {
   }
 }
 
-function filterExercises(searchValue?: string, selectedLevel?: string, selectedCategory?: number, selectedSubcategory?: number): void {
+function filterExercises(searchValue?: string, selectedLevel?: string, selectedCategory?: number, selectedSubcategory?: number, onlyFavorites?: boolean): void {
   let filtered = [...exercises];
 
   if (searchValue) {
-    filtered = filtered.filter(item =>
-      item.titulo.toLowerCase().includes(searchValue.toLowerCase())
-    );
+    filtered = filtered.filter(item => item.titulo.toLowerCase().includes(searchValue.toLowerCase()));
   }
 
   if (selectedLevel) {
@@ -103,6 +101,10 @@ function filterExercises(searchValue?: string, selectedLevel?: string, selectedC
 
   if (selectedSubcategory) {
     filtered = filtered.filter(item => item.categorias.includes(selectedSubcategory));
+  }
+
+  if (onlyFavorites) {
+    filtered = filtered.filter(item => item.favorito === true);
   }
 
   filteredExercises = filtered;
@@ -118,8 +120,9 @@ async function handleRequest(): Promise<void> {
   const selectedLevel = url.searchParams.get('levels') ? String(url.searchParams.get('levels')) : undefined;
   const selectedCategory = url.searchParams.get('categories') ? Number(url.searchParams.get('categories')) : undefined;
   const selectedSubcategory = url.searchParams.get('subcategories') ? Number(url.searchParams.get('subcategories')) : undefined;
+  const onlyFavorites = url.searchParams.get('favorito') ? Boolean(url.searchParams.get('favorito')) : undefined;
 
-  filterExercises(searchValue, selectedLevel, selectedCategory, selectedSubcategory);
+  filterExercises(searchValue, selectedLevel, selectedCategory, selectedSubcategory, onlyFavorites);
 }
 
 await handleRequest();

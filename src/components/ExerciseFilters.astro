@@ -6,11 +6,20 @@ const levels = [...new Set(exercises.map(exercise => exercise.nivel))];
 
 <style>
   select { background-image: none; }
+  input:checked + #span-favorite { 
+    background-color: #000000;
+    color: #ccff00;
+  }
 </style>
 
 <label class="relative flex flex-col">
+  <input form="filter-exercise-form" type="checkbox" name="favorito" id="favorite-check" class="hidden">
+  <span id="span-favorite" class="px-4 py-2 rounded-md bg-electric-lime border border-electric-lime hover:bg-lime-zest hover:cursor-pointe">Favorito</span>
+</label>
+
+<label class="relative flex flex-col">
   <span id="span-level" class="px-4 py-2 rounded-md bg-electric-lime hover:bg-lime-zest hover:cursor-pointer">Nivel</span>
-  <select id="select-level" multiple class="absolute z-10 hidden rounded-md top-11 categories bg-electric-lime hover:cursor-pointer hover:bg-lime-zest" name="levels">
+  <select form="filter-exercise-form" id="select-level" multiple class="absolute z-10 hidden rounded-md top-11 categories bg-electric-lime hover:cursor-pointer hover:bg-lime-zest" name="levels">
     {levels.map(level => (
       <option value={level}>
         {level === 'A' ? 'Avanzado' : level === 'B' ? 'Intermedio' : 'Básico'}
