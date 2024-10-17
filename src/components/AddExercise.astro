@@ -28,10 +28,6 @@ const levels = [...new Set(exercises.map(exercise => exercise.nivel))];
           <input type="text" id="titulo" name="titulo" class="text-black rounded-full" required>
         </label>
         <label class="flex flex-col gap-y-1">
-          <span class="ml-2">Descripción</span>
-          <textarea id="descripcion" name="descripcion" class="text-black resize-none rounded-2xl"></textarea>
-        </label>
-        <label class="flex flex-col gap-y-1">
           <span class="ml-2">URL <span class="text-zinc-500">(TikTok/Instagram/YouTube)</span></span>
           <input type="url" id="video-url" name="video_url" class="text-black rounded-full">
         </label>
@@ -227,7 +223,6 @@ const levels = [...new Set(exercises.map(exercise => exercise.nivel))];
 function handleErrors(errors) {
   const errorElements = {
     titulo: document.getElementById('titulo'),
-    descripcion: document.getElementById('descripcion'),
     nivel: document.getElementById('level'),
     video_url: document.getElementById('video-url'),
   };
