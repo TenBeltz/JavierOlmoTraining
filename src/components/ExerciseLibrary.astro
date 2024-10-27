@@ -157,9 +157,9 @@ function renderVideo(videoUrl: string): string {
   <form id="filter-exercise-form" method="get"></form>
   <SearchExercise />
   
-  <div class="flex flex-wrap gap-1 mx-4">
-    <button form="filter-exercise-form" type="submit" class="px-4 py-2 bg-black border rounded-md text-electric-lime hover:text-lime-zest hover:border-lime-zest border-electric-lime">Filtrar</button>
-    <button form="filter-exercise-form" id="clear-filters" type="reset" class="px-4 py-2 bg-black border rounded-md text-electric-lime hover:text-lime-zest hover:border-lime-zest border-electric-lime">Quitar filtros</button>
+  <div class="flex flex-wrap gap-6 mx-4">
+    <button form="filter-exercise-form" type="submit" class="px-6 py-1 bg-black border rounded-full text-electric-lime hover:text-lime-zest hover:border-lime-zest border-electric-lime">Filtrar</button>
+    <button form="filter-exercise-form" id="clear-filters" type="reset" class="px-6 py-1 bg-black border rounded-full text-electric-lime hover:text-lime-zest hover:border-lime-zest border-electric-lime">Quitar filtros</button>
 
     <AddExercise />
     <ExerciseFilters categories={categories} />

@@ -14,12 +14,12 @@ const levels = [...new Set(exercises.map(exercise => exercise.nivel))];
 
 <label class="relative flex flex-col">
   <input form="filter-exercise-form" type="checkbox" name="favorito" id="favorite-check" class="hidden">
-  <span id="span-favorite" class="px-4 py-2 rounded-md bg-electric-lime border border-electric-lime hover:bg-lime-zest hover:cursor-pointe">Favorito</span>
+  <span id="span-favorite" class="px-6 py-1 rounded-full bg-electric-lime border border-electric-lime hover:bg-lime-zest hover:cursor-pointe">Favorito</span>
 </label>
 
 <label class="relative flex flex-col">
-  <span id="span-level" class="px-4 py-2 rounded-md bg-electric-lime hover:bg-lime-zest hover:cursor-pointer">Nivel</span>
-  <select form="filter-exercise-form" id="select-level" multiple class="absolute z-10 hidden rounded-md top-11 categories bg-electric-lime hover:cursor-pointer hover:bg-lime-zest" name="levels">
+  <span id="span-level" class="px-6 py-1 rounded-full bg-electric-lime hover:bg-lime-zest hover:cursor-pointer">Nivel</span>
+  <select form="filter-exercise-form" id="select-level" multiple class="absolute z-10 hidden rounded-2xl top-11 categories bg-electric-lime hover:cursor-pointer hover:bg-lime-zest" name="levels">
     {levels.map(level => (
       <option value={level}>
         {level === 'A' ? 'Avanzado' : level === 'B' ? 'Intermedio' : 'Básico'}
@@ -31,8 +31,8 @@ const levels = [...new Set(exercises.map(exercise => exercise.nivel))];
 {categories.filter(parentcategory => !parentcategory.categoria_padre)
   .map(category => 
     <label for={`select-categories-${category.id}`} class="relative flex flex-col">
-      <span id={`span-category-${category.titulo}`} class="px-4 py-2 rounded-md bg-electric-lime hover:bg-lime-zest hover:cursor-pointer">{category.titulo}</span>
-      <select form="filter-exercise-form" id={`select-categories-${category.id}`} multiple class="absolute z-10 hidden rounded-md top-11 categories bg-electric-lime hover:cursor-pointer hover:bg-lime-zest" name="categories">
+      <span id={`span-category-${category.titulo}`} class="px-6 py-1 rounded-full bg-electric-lime hover:bg-lime-zest hover:cursor-pointer">{category.titulo}</span>
+      <select form="filter-exercise-form" id={`select-categories-${category.id}`} multiple class="absolute z-10 hidden rounded-2xl top-11 categories bg-electric-lime hover:cursor-pointer hover:bg-lime-zest" name="categories">
         <option value="">{category.titulo}</option>
         {category.categorias_hijas?.map(subcategoryId => {
           const subcategory = categories.find(cat => cat.id === subcategoryId);
@@ -46,8 +46,8 @@ const levels = [...new Set(exercises.map(exercise => exercise.nivel))];
 {categories.filter(subcategory => subcategory.categoria_padre && subcategory.categorias_hijas.length !== 0)
   .map(subcategory => 
     <label for={`select-subcategories-${subcategory.id}`} class="relative flex flex-col">
-      <span id={`span-subcategory-${subcategory.titulo}`} class="px-4 py-2 rounded-md bg-electric-lime hover:bg-lime-zest hover:cursor-pointer">{subcategory.titulo}</span>
-      <select form="filter-exercise-form" id={`select-subcategories-${subcategory.id}`} multiple class="absolute z-10 hidden px-4 py-2 rounded-md top-11 subcategories bg-electric-lime hover:cursor-pointer hover:bg-lime-zest" name="subcategories">
+      <span id={`span-subcategory-${subcategory.titulo}`} class="px-6 py-1 rounded-full bg-electric-lime hover:bg-lime-zest hover:cursor-pointer">{subcategory.titulo}</span>
+      <select form="filter-exercise-form" id={`select-subcategories-${subcategory.id}`} multiple class="absolute z-10 hidden px-6 py-1 rounded-2xl top-11 subcategories bg-electric-lime hover:cursor-pointer hover:bg-lime-zest" name="subcategories">
         <option value="">{subcategory.titulo}</option>
         {subcategory.categorias_hijas?.map(subsubcategoryId => {
           const subsubcategory = categories.find(cat => cat.id === subsubcategoryId);
