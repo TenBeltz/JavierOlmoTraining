@@ -12,9 +12,10 @@ const levels = [...new Set(exercises.map(exercise => exercise.nivel))];
   }
 </style>
 
-<label class="relative flex flex-col">
-  <input form="filter-exercise-form" type="checkbox" name="favorito" id="favorite-check" class="hidden">
-  <span id="span-favorite" class="px-6 py-1 rounded-full bg-electric-lime border border-electric-lime hover:bg-lime-zest hover:cursor-pointe">Favorito</span>
+<label class="inline-flex items-center cursor-pointer gap-x-2">
+  <input form="filter-exercise-form" type="checkbox" name="favorito" id="favorite-check" class="sr-only peer">
+  <span id="span-favorite" class="text-electric-lime">favorito</span>
+  <div class="relative w-[3.8rem] h-8 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-electric-lime after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-7 after:w-7 after:transition-all peer-checked:bg-electric-lime"></div>
 </label>
 
 <label class="relative flex flex-col">
