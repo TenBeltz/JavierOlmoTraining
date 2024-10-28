@@ -1,50 +1,49 @@
-<section class="w-full h-full flex flex-col items-center mt-10 p-5">
-    <h2 class="text-electric-lime text-4xl sm:text-5xl font-bold text-center mb-5">
-        Política de Cookies
-    </h2>
-    <div class="bg-white rounded-3xl w-full max-w-3xl p-8 shadow-lg">
-        <h3 class="text-2xl font-bold mb-3">1. ¿Qué son las Cookies?</h3>
-        <p class="text-lg mb-5">
-            Las cookies son pequeños archivos de texto que se descargan en tu dispositivo al visitar nuestro sitio web. Estas cookies permiten que el sitio web funcione correctamente, recuerde tus preferencias y recoja información para mejorar la experiencia del usuario.
-        </p>
-
-        <h3 class="text-2xl font-bold mb-3">2. Tipos de Cookies Utilizadas</h3>
-        <p class="text-lg mb-3">
-            En javierolmotraining.es, utilizamos las siguientes cookies:
-        </p>
-        <ul class="list-disc list-inside mb-5">
-            <li><strong>Cookies técnicas o necesarias:</strong> Estas cookies son esenciales para el funcionamiento del sitio web y permiten que puedas navegar por el mismo, utilizar las funciones básicas, y acceder a áreas seguras del sitio. Sin estas cookies, el sitio web no podría funcionar adecuadamente.</li>
-            <li><strong>Cookies de personalización:</strong> Estas cookies permiten recordar tus preferencias (por ejemplo, tu nombre de usuario o los favoritos en la biblioteca de ejercicios) para que no tengas que configurarlas cada vez que visites nuestro sitio.</li>
-        </ul>
-
-        <h3 class="text-2xl font-bold mb-3">3. Finalidad de las Cookies</h3>
-        <p class="text-lg mb-5">
-            Las cookies utilizadas en javierolmotraining.es tienen las siguientes finalidades:
-        </p>
-        <ul class="list-disc list-inside mb-5">
-            <li><strong>Login:</strong> Para mantener tu sesión iniciada en la página web y facilitar tu acceso sin tener que introducir tus credenciales repetidamente.</li>
-            <li><strong>Favoritos de la Biblioteca:</strong> Para recordar los ejercicios que has marcado como favoritos en la biblioteca, permitiéndote acceder a ellos fácilmente en futuras visitas.</li>
-        </ul>
-
-        <h3 class="text-2xl font-bold mb-3">4. Gestión de las Cookies</h3>
-        <p class="text-lg mb-5">
-            Puedes permitir, bloquear o eliminar las cookies instaladas en tu dispositivo configurando las opciones del navegador. A continuación, te indicamos cómo hacerlo en los navegadores más comunes:
-        </p>
-        <ul class="list-disc list-inside mb-5">
-            <li><a href="https://support.google.com/chrome/answer/95647" target="_blank" class="text-electric-lime font-bold">Google Chrome</a>: Configuración de cookies en Chrome</li>
-            <li><a href="https://support.mozilla.org/es/kb/habilitar-y-deshabilitar-cookies-sitios-web-rastrear-preferencias" target="_blank" class="text-electric-lime font-bold">Mozilla Firefox</a>: Configuración de cookies en Firefox</li>
-            <li><a href="https://support.microsoft.com/es-es/help/17442/windows-internet-explorer-delete-manage-cookies" target="_blank" class="text-electric-lime font-bold">Internet Explorer</a>: Configuración de cookies en Internet Explorer</li>
-            <li><a href="https://support.apple.com/es-es/guide/safari/sfri11471/mac" target="_blank" class="text-electric-lime font-bold">Safari</a>: Configuración de cookies en Safari</li>
-        </ul>
-
-        <h3 class="text-2xl font-bold mb-3">5. Modificaciones en la Política de Cookies</h3>
-        <p class="text-lg mb-5">
-            Esta Política de Cookies puede ser actualizada en función de cambios normativos o técnicos. Recomendamos a los usuarios revisar esta política periódicamente para estar informados sobre cómo y para qué usamos las cookies.
-        </p>
-
-        <h3 class="text-2xl font-bold mb-3">6. Contacto</h3>
-        <p class="text-lg">
-            Si tienes alguna duda sobre esta Política de Cookies, puedes contactarnos en: <a href="mailto:hola@javierolmotraining.es" class="text-electric-lime font-bold">hola@javierolmotraining.es</a>
-        </p>
+<div class="fixed bottom-0 right-0 z-50 items-center justify-center hidden py-4 mx-4" id="cookies-popup">
+  <div class="container">
+    <div class="flex flex-wrap items-center justify-between p-4 bg-gray-900 border rounded-lg">
+      <div class="flex items-center w-full px-2 md:w-7/12 lg:w-2/3">
+        <span class="mr-4 text-indigo-500">
+          <svg stroke="currentColor" fill="none" stroke-width="0" viewBox="0 0 24 24" height="30" width="30" xmlns="http://www.w3.org/2000/svg" class="stroke-electric-lime">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+          </svg>
+        </span>
+        <div class="mb-6 md:mb-0">
+          <h3 class="text-lg font-bold text-white">Usamos cookies</h3>
+          <p class="text-sm font-medium">Por favor, acepta nuestras cookies para una mejor experiencia.</p>
+        </div>
+      </div>
+      <div class="w-full md:w-5/12 lg:w-1/3">
+        <div class="flex items-center space-x-3 md:justify-end">
+          <button id="view-cookies" class="h-10 px-8 py-2 text-black bg-white rounded btn hover:bg-gray-50 active:bg-gray-100">Ver</button>
+          <button id="accept-cookies" class="h-10 px-8 py-2 text-black rounded btn hover:bg-indigo-500 active:bg-indigo-700 bg-lime-400">Aceptar</button>
+        </div>
+      </div>
     </div>
-</section>
+  </div>
+</div>
+
+<script>
+	const viewCookiesBtn = document.getElementById('view-cookies') as HTMLButtonElement;
+	const acceptCookiesBtn = document.getElementById('accept-cookies') as HTMLButtonElement;
+	const cookiesPopup = document.getElementById('cookies-popup') as HTMLDivElement;
+	
+	function getCookie(name: string) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+  }
+
+	function toggleCookiesPopup(): void {
+		cookiesPopup.classList.toggle('hidden');
+		cookiesPopup.classList.toggle('flex');
+	}
+
+  if (!getCookie('token')) toggleCookiesPopup();
+
+  viewCookiesBtn.addEventListener('click', () => window.location.href = '/cookies');
+
+  acceptCookiesBtn.addEventListener('click', () => {
+    document.cookie = "token=accepted; path=/; max-age=" + 60 * 60 * 24 * 30;
+    toggleCookiesPopup();
+  });
+</script>
