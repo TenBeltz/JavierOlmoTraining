@@ -38,12 +38,12 @@
 		cookiesPopup.classList.toggle('flex');
 	}
 
-  if (!getCookie('token')) toggleCookiesPopup();
+  if (!getCookie('cookies')) toggleCookiesPopup();
 
   viewCookiesBtn.addEventListener('click', () => window.location.href = '/cookies');
 
   acceptCookiesBtn.addEventListener('click', () => {
-    document.cookie = "token=accepted; path=/; max-age=" + 60 * 60 * 24 * 30;
+    document.cookie = "cookies=accepted; path=/; max-age=" + 60 * 60 * 24 * 30;
     toggleCookiesPopup();
   });
 </script>

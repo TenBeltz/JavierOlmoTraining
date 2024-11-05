@@ -50,6 +50,16 @@ const canonicalURL = new URL(determineCanonicalURL(), Astro.site)
 <meta name="googlebot" content="index, follow" />
 
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7NC4PG5Z5M"></script>
+<script is:inline>
+	window.dataLayer = window.dataLayer || [];
+	function gtag() {
+	  dataLayer.push(arguments);
+	}
+	gtag("js", new Date());
+  
+	gtag("config", "G-XXXXXXXXXX");
+  </script>
 <!-- <link rel="apple-touch-icon" href="/img/icons/apple-touch-icon.png" /> -->
 
 <!-- <meta name="msapplication-config" content="/browserconfig.xml" /> -->
