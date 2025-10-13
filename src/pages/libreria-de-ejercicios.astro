@@ -20,10 +20,97 @@ import ExerciseLibrary from '../components/ExerciseLibrary.astro';
       <strong class="text-electric-lime">readaptación de lesiones</strong>
     </Hero>
     <Header/>
-    <section class="mx-auto max-w-7xl">
+    <section id="library-content" class="mx-auto max-w-7xl" style="display: none;">
       <h2 class="py-6 text-3xl font-bold text-center text-white">Biblioteca de ejercicios</h2>
       <ExerciseLibrary />
+    </section>
+    <section id="library-password" class="mx-auto max-w-2xl px-6 py-12 text-white" style="display: none;">
+      <div class="rounded-3xl bg-black/70 p-8">
+        <h2 class="text-3xl font-bold text-center">Biblioteca protegida</h2>
+        <p class="mt-4 text-center text-white/80">Introduce la contraseña para acceder a la biblioteca de ejercicios.</p>
+        <form id="library-password-form" class="mt-8 flex flex-col gap-4">
+          <input id="library-password-input" type="password" name="password" placeholder="Contraseña" class="w-full rounded-full border border-electric-lime bg-transparent px-6 py-3 text-center text-white focus:outline-none focus:ring-2 focus:ring-electric-lime" required>
+          <p id="library-password-error" class="hidden text-center text-sm text-red-500">Contraseña incorrecta. Inténtalo de nuevo.</p>
+          <button type="submit" class="mx-auto w-full rounded-full bg-electric-lime px-6 py-3 font-semibold text-black transition-colors hover:bg-lime-zest">Acceder</button>
+        </form>
+      </div>
     </section>
 	</main>
   <Footer />
 </Layout>
+
+<script>
+  const PASSWORD = 'jolmopass';
+  const COOKIE_NAME = 'library_pass';
+  const COOKIE_TTL_SECONDS = 60 * 60 * 24 * 30; // 30 días
+
+  const contentSection = document.getElementById('library-content');
+  const passwordSection = document.getElementById('library-password');
+  const passwordForm = document.getElementById('library-password-form');
+  const passwordInputElement = document.getElementById('library-password-input');
+  const passwordError = document.getElementById('library-password-error');
+
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) {
+      return parts.pop().split(';').shift();
+    }
+    return null;
+  }
+
+  function setCookie(name, value, seconds) {
+    const expires = new Date(Date.now() + seconds * 1000).toUTCString();
+    document.cookie = `${name}=${value}; expires=${expires}; path=/; SameSite=Lax`;
+  }
+
+  function showContent() {
+    if (contentSection) {
+      contentSection.style.display = '';
+    }
+    if (passwordSection) {
+      passwordSection.style.display = 'none';
+    }
+  }
+
+  function showPasswordPrompt() {
+    if (contentSection) {
+      contentSection.style.display = 'none';
+    }
+    if (passwordSection) {
+      passwordSection.style.display = '';
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const storedPass = getCookie(COOKIE_NAME);
+    if (storedPass === PASSWORD) {
+      showContent();
+    } else {
+      showPasswordPrompt();
+    }
+  });
+
+  passwordForm?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const inputEl = passwordInputElement instanceof HTMLInputElement ? passwordInputElement : null;
+    const providedPass = inputEl?.value ?? '';
+
+    if (providedPass === PASSWORD) {
+      setCookie(COOKIE_NAME, PASSWORD, COOKIE_TTL_SECONDS);
+      showContent();
+      if (passwordError) {
+        passwordError.classList.add('hidden');
+      }
+      if (inputEl) {
+        inputEl.value = '';
+      }
+    } else {
+      if (passwordError) {
+        passwordError.classList.remove('hidden');
+      }
+      inputEl?.focus();
+      inputEl?.select();
+    }
+  });
+</script>
